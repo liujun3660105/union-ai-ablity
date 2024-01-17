@@ -17,7 +17,7 @@ import Icon, {
   SettingOutlined,
   BuildOutlined,
 } from '@ant-design/icons';
-import { Modal, message, Tooltip, Dropdown } from 'antd';
+import { Modal, message, Tooltip, Dropdown, Menu } from 'antd';
 import { ItemType } from 'antd/es/menu/hooks/useItems';
 import copy from 'copy-to-clipboard';
 import Image from 'next/image';
@@ -25,6 +25,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { ReactNode, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { getItems } from './menu';
+// import useRoute from '@/hooks/use-route';
 
 type SettingItem = {
   key: string;
@@ -59,6 +61,7 @@ function SideBar() {
   const { t, i18n } = useTranslation();
 
   const [logo, setLogo] = useState<string>('/LOGO_1.png');
+  // const routes = useRoute();
 
   const routes = useMemo(() => {
     const items: RouteItem[] = [
@@ -211,13 +214,13 @@ function SideBar() {
         <Link href="/" className="px-2 py-3">
           <Image src="/LOGO_SMALL.png" alt="DB-GPT" width={63} height={46} className="w-[63px] h-[46px]" />
         </Link>
-        <div>
+        {/* <div>
           <Link href="/" className="flex items-center justify-center my-4 mx-auto w-12 h-12 bg-theme-primary rounded-full text-white">
             <PlusOutlined className="text-lg" />
           </Link>
-        </div>
+        </div> */}
         {/* Chat List */}
-        <div className="flex-1 overflow-y-scroll py-4 space-y-2">
+        {/* <div className="flex-1 overflow-y-scroll py-4 space-y-2">
           {dialogueList?.map((item) => {
             const active = item.conv_uid === chatId && item.chat_mode === scene;
 
@@ -229,9 +232,10 @@ function SideBar() {
               </Tooltip>
             );
           })}
-        </div>
+        </div> */}
         <div className="py-4">
-          <Dropdown menu={{ items: dropDownRoutes }} placement="topRight">
+          {/* <SiderMenu /> */}
+          <Dropdown menu={{ items: getItems(t) }} placement="topRight">
             <div className={smallMenuItemStyle()}>
               <MenuOutlined />
             </div>
@@ -261,12 +265,12 @@ function SideBar() {
       <Link href="/" className="p-2">
         <Image src={logo} alt="DB-GPT" width={239} height={60} className="w-full h-full" />
       </Link>
-      <Link href="/" className="flex items-center justify-center mb-4 mx-4 h-11 bg-theme-primary rounded text-white">
+      {/* <Link href="/" className="flex items-center justify-center mb-4 mx-4 h-11 bg-theme-primary rounded text-white">
         <PlusOutlined className="mr-2" />
         <span>{t('new_chat')}</span>
-      </Link>
+      </Link> */}
       {/* Chat List */}
-      <div className="flex-1 overflow-y-scroll">
+      {/* <div className="flex-1 overflow-y-scroll">
         {dialogueList?.map((item) => {
           const active = item.conv_uid === chatId && item.chat_mode === scene;
 
@@ -295,20 +299,29 @@ function SideBar() {
             </Link>
           );
         })}
-      </div>
+      </div> */}
       {/* Settings */}
-      <div className="pt-4">
-        <div className="max-h-52 overflow-y-auto">
-          {routes.map((item) => (
+      <div className="pt-4 flex flex-col h-full">
+        <div className="max-h-200 overflow-y-auto flex-1">
+          <Menu
+            theme={mode}
+            // onClick={onClick}
+            // style={{ width: 256 }}
+            defaultOpenKeys={['sub1']}
+            // selectedKeys={[current]}
+            mode="inline"
+            items={getItems(t)}
+          />
+          {/* {routes.map((item) => (
             <Link key={item.key} href={item.path} className={`${menuItemStyle(pathname === item.path)} overflow-hidden`}>
               <>
                 {item.icon}
                 <span className="ml-3 text-sm">{item.name}</span>
               </>
             </Link>
-          ))}
+          ))} */}
         </div>
-        <div className="flex items-center justify-around py-4 mt-2">
+        <div className="flex items-center justify-around py-4 mt-2 h-5 flex-none">
           {settings.map((item) => (
             <Tooltip key={item.key} title={item.name}>
               <div className="flex-1 flex items-center justify-center cursor-pointer text-xl" onClick={item.onClick}>

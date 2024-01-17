@@ -2,7 +2,18 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
 const en = {
+  Text_LLM: 'Text LLM',
+  Image_LLM: 'Image LLM',
+  Video_LLM: 'Video_LLM',
+  Intelligent_QA: 'Intelligent QA',
+  Text_Summarization: 'Text Summarization',
+  Emotion_Classification: 'Emotion Classification',
+  Image_Generation: 'Image Generation',
+  Similar_Search: 'Similar Search',
+  Object_Recognition: 'Object Recognition',
+  Feature_Extraction: 'Feature Extraction',
   Knowledge_Space: 'Knowledge',
+  Video_Generation: 'Video Generation',
   space: 'space',
   Vector: 'Vector',
   Owner: 'Owner',
@@ -188,6 +199,17 @@ export interface Resources {
 }
 
 const zh: Resources['translation'] = {
+  Text_LLM: '文本大语言模型',
+  Image_LLM: '图像大语言模型',
+  Video_LLM: '视频大语言模型',
+  Intelligent_QA: '智能问答',
+  Text_Summarization: '文本摘要',
+  Emotion_Classification: '情感分类',
+  Image_Generation: '图片生成',
+  Similar_Search: '相似搜索',
+  Object_Recognition: '目标识别',
+  Feature_Extraction: '特征提取',
+  Video_Generation: '视频生成',
   Knowledge_Space: '知识库',
   space: '知识库',
   Vector: '向量',
