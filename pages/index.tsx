@@ -1,6 +1,6 @@
 import { useRequest } from 'ahooks';
 import { useContext, useState } from 'react';
-import { Divider, Spin, Tag } from 'antd';
+import { Button, Divider, Spin, Tag } from 'antd';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { NextPage } from 'next';
@@ -14,7 +14,6 @@ import { STORAGE_INIT_MESSAGE_KET } from '@/utils';
 import Icon from '@ant-design/icons/lib/components/Icon';
 import { ColorfulDB, ColorfulPlugin, ColorfulDashboard, ColorfulData, ColorfulExcel, ColorfulDoc, ColorfulChat } from '@/components/icons';
 import classNames from 'classnames';
-
 const Home: NextPage = () => {
   const router = useRouter();
   const { model, setModel } = useContext(ChatContext);
@@ -95,7 +94,7 @@ const Home: NextPage = () => {
               >
                 <div
                   className={classNames(
-                    'flex flex-row justify-center h-[102px] min-h-min bg-white dark:bg-[#232734] dark:text-white rounded p-4 cursor-pointer hover:-translate-y-1 transition-[transform_shadow] duration-300 hover:shadow-[0_14px_20px_-10px_rgba(100,100,100,.1)]',
+                    'flex flex-row justify-center h-[102px] min-h-min  rounded p-4 cursor-pointer hover:-translate-y-1 transition-[transform_shadow] duration-300 hover:shadow-[0_14px_20px_-10px_rgba(100,100,100,.1)]',
                     { 'grayscale !cursor-no-drop': scene.show_disable },
                   )}
                 >
@@ -121,6 +120,10 @@ const Home: NextPage = () => {
         </div>
         <div className="flex flex-1 w-full mb-4">
           <CompletionInput loading={loading} onSubmit={submit} />
+        </div>
+        <div className="h-32 bg-primary">
+          <Button>test</Button>
+          <span>你好</span>
         </div>
       </div>
     </div>

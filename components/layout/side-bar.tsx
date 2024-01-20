@@ -17,7 +17,7 @@ import Icon, {
   SettingOutlined,
   BuildOutlined,
 } from '@ant-design/icons';
-import { Modal, message, Tooltip, Dropdown, Menu } from 'antd';
+import { Modal, message, Tooltip, Dropdown, Menu, Button, MenuItemProps } from 'antd';
 import { ItemType } from 'antd/es/menu/hooks/useItems';
 import copy from 'copy-to-clipboard';
 import Image from 'next/image';
@@ -26,6 +26,7 @@ import { useRouter } from 'next/router';
 import { ReactNode, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getItems } from './menu';
+import ColorPalettes from '../color/color-palettes';
 // import useRoute from '@/hooks/use-route';
 
 type SettingItem = {
@@ -100,13 +101,13 @@ function SideBar() {
   }, [i18n.language]);
 
   const handleToggleMenu = () => {
+    if (document.body.clientWidth < 992) return;
     setIsMenuExpand(!isMenuExpand);
   };
 
   const handleToggleTheme = useCallback(() => {
     const theme = mode === 'light' ? 'dark' : 'light';
     setMode(theme);
-    localStorage.setItem(STORAGE_THEME_KEY, theme);
   }, [mode]);
 
   const handleChangeLang = useCallback(() => {
@@ -120,8 +121,8 @@ function SideBar() {
       {
         key: 'theme',
         name: t('Theme'),
-        icon: mode === 'dark' ? <Icon component={DarkSvg} /> : <Icon component={SunnySvg} />,
-        onClick: handleToggleTheme,
+        icon: <ColorPalettes />,
+        onClick: () => {},
       },
       {
         key: 'language',
@@ -158,7 +159,7 @@ function SideBar() {
       .map<ItemType>((item) => ({
         key: item.key,
         label: (
-          <div className="text-base" onClick={item.onClick}>
+          <div className="text-base flex" onClick={item.onClick}>
             {item.icon}
             <span className="ml-2 text-sm">{item.name}</span>
           </div>
@@ -207,12 +208,16 @@ function SideBar() {
   useEffect(() => {
     setLogo(mode === 'dark' ? '/WHITE_LOGO.png' : '/LOGO_1.png');
   }, [mode]);
+  const handleChangeRoute = (item: { key: string; keyPath: string[] }) => {
+    const path = item.keyPath.reverse().join('/');
+    replace(path);
+  };
 
   if (!isMenuExpand) {
     return (
-      <div className="flex flex-col justify-between h-screen bg-white dark:bg-[#232734] animate-fade animate-duration-300">
+      <div className="flex flex-col justify-between h-screen bg-theme-secondary animate-fade animate-duration-300">
         <Link href="/" className="px-2 py-3">
-          <Image src="/LOGO_SMALL.png" alt="DB-GPT" width={63} height={46} className="w-[63px] h-[46px]" />
+          <Image src="/china-uniform-small.png" alt="China-Uniform" width={63} height={63} className="w-[63px] h-[46px]" />
         </Link>
         {/* <div>
           <Link href="/" className="flex items-center justify-center my-4 mx-auto w-12 h-12 bg-theme-primary rounded-full text-white">
@@ -260,10 +265,10 @@ function SideBar() {
   }
 
   return (
-    <div className="flex flex-col h-screen bg-white dark:bg-[#232734]">
-      {/* LOGO */}
+    <div className="flex flex-col h-screen">
+      {/* LOGO  bg-white dark:bg-[#232734] */}
       <Link href="/" className="p-2">
-        <Image src={logo} alt="DB-GPT" width={239} height={60} className="w-full h-full" />
+        <Image src="/china-uniform-big.png" alt="DB-GPT" width={239} height={60} className="w-full h-full" />
       </Link>
       {/* <Link href="/" className="flex items-center justify-center mb-4 mx-4 h-11 bg-theme-primary rounded text-white">
         <PlusOutlined className="mr-2" />
@@ -301,16 +306,18 @@ function SideBar() {
         })}
       </div> */}
       {/* Settings */}
-      <div className="pt-4 flex flex-col h-full">
-        <div className="max-h-200 overflow-y-auto flex-1">
+      <div className="pt-4 flex flex-col h-full justify-between min-h-0">
+        <div className="overflow-y-auto flex-1 min-h-0 ">
+          {/* <div className="bg-secondary h-80">11111</div> */}
           <Menu
-            theme={mode}
+            // theme={mode}
             // onClick={onClick}
             // style={{ width: 256 }}
-            defaultOpenKeys={['sub1']}
-            // selectedKeys={[current]}
+            defaultOpenKeys={pathname.split('/')}
+            selectedKeys={pathname.split('/')}
             mode="inline"
             items={getItems(t)}
+            onClick={handleChangeRoute}
           />
           {/* {routes.map((item) => (
             <Link key={item.key} href={item.path} className={`${menuItemStyle(pathname === item.path)} overflow-hidden`}>
@@ -321,9 +328,9 @@ function SideBar() {
             </Link>
           ))} */}
         </div>
-        <div className="flex items-center justify-around py-4 mt-2 h-5 flex-none">
+        <div className="flex items-center justify-around py-4 mt-2 flex-none">
           {settings.map((item) => (
-            <Tooltip key={item.key} title={item.name}>
+            <Tooltip key={item.key} title={item.name} placement="bottom">
               <div className="flex-1 flex items-center justify-center cursor-pointer text-xl" onClick={item.onClick}>
                 {item.icon}
               </div>

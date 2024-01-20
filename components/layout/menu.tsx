@@ -6,39 +6,31 @@ import { TFunction } from 'i18next';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
-function getItem(
-  label: React.ReactNode,
-  key?: React.Key | null,
-  icon?: React.ReactNode,
-  children?: MenuItem[],
-  routePath?: string,
-  type?: 'group',
-): MenuItem {
+function getItem(label: React.ReactNode, key?: React.Key | null, icon?: React.ReactNode, children?: MenuItem[], type?: 'group'): MenuItem {
   return {
     key,
     icon,
     children,
     label,
     type,
-    routePath,
   } as MenuItem;
 }
 
 // MenuItem[]
 export const getItems: (t: TFunction<'translation', undefined>) => MenuItem[] = (t) => {
   return [
-    getItem(t('Text_LLM'), 'sub1', <MailOutlined />, [
-      getItem(t('Intelligent_QA'), '1', <MailOutlined />, undefined, '/text-llm/qa'),
-      getItem(t('Text_Summarization'), '2', <MailOutlined />),
-      getItem(t('Emotion_Classification'), '3', <MailOutlined />),
+    getItem(t('Text_LLM'), 'text-llm', <MailOutlined />, [
+      getItem(t('Intelligent_QA'), 'qa', <MailOutlined />),
+      getItem(t('Text_Summarization'), 'ts', <MailOutlined />),
+      getItem(t('Emotion_Classification'), 'ec', <MailOutlined />),
     ]),
-    getItem(t('Image_LLM'), 'sub2', <AppstoreOutlined />, [
-      getItem(t('Image_Generation'), '5', <MailOutlined />),
-      getItem(t('Similar_Search'), '5', <MailOutlined />),
-      getItem(t('Feature_Extraction'), '6', <MailOutlined />),
-      getItem(t('Object_Recognition'), '6', <MailOutlined />),
+    getItem(t('Image_LLM'), 'img-llm', <AppstoreOutlined />, [
+      getItem(t('Image_Generation'), 'ig', <MailOutlined />),
+      getItem(t('Similar_Search'), 'ss', <MailOutlined />),
+      getItem(t('Feature_Extraction'), 'fe', <MailOutlined />),
+      getItem(t('Object_Recognition'), 'or', <MailOutlined />),
     ]),
 
-    getItem(t('Video_LLM'), 'sub4', <SettingOutlined />, [getItem(t('Video_Generation'), '9')]),
+    getItem(t('Video_LLM'), 'video-llm', <SettingOutlined />, [getItem(t('Video_Generation'), 'vg')]),
   ];
 };

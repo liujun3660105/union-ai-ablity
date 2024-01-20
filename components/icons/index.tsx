@@ -17,6 +17,7 @@ import PendingIcon from './pending-icon';
 import SyncIcon from './sync-icon';
 import DoneIcon from './done-icon';
 import FileError from './file-error';
+import ColorPalette from './color-palette';
 
 export {
   ColorfulDashboard,
@@ -38,4 +39,5 @@ export {
   SyncIcon,
   DoneIcon,
   FileError,
+  ColorPalette,
 };

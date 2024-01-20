@@ -1,15 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import 'theme.css';
 
 body {
   margin: 0;
   font-family: var(--joy-fontFamily-body, var(--joy-Josefin Sans, sans-serif));
   line-height: var(--joy-lineHeight-md, 1.5);
-  --antd-primary-color: #0069fe;
+  /* --antd-primary-color: #0069fe; */
 }
 
-.light {
+/* .light {
   color: #333;
   background-color: #f7f7f7;
 }
@@ -17,7 +18,7 @@ body {
 .dark {
   color: #f7f7f7;
   background-color: #151622;
-}
+} */
 
 .ant-btn-primary {
   background-color: var(--antd-primary-color);
@@ -51,26 +52,26 @@ table tr td {
 
 /* 自定义滚动条样式 */
 ::-webkit-scrollbar {
-  display: none;
+  /* display: none; */
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  /* background: #f1f1f1; */
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #888;
+  /* background: #888; */
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  /* background: #555; */
 }
 
 .dark :where(.css-dev-only-do-not-override-18iikkb).ant-tabs .ant-tabs-tab-btn {
-  color: white;
+  /* color: white; */
 }
 
-:where(.css-dev-only-do-not-override-18iikkb).ant-form-item .ant-form-item-label>label {
+:where(.css-dev-only-do-not-override-18iikkb).ant-form-item .ant-form-item-label > label {
   height: 36px;
 }
 

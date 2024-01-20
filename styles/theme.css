@@ -1,0 +1,73 @@
+html[data-theme='light'] {
+  --color-primary: #ffffff;
+  /* --color-buttons: #bae7ff; */
+  --color-texts: #000;
+}
+html[data-theme='dark'] {
+  --color-primary: #000;
+  /* --color-secondary: #141414; */
+  /* --color-buttons: #434343; */
+  /* --color-typography: #ff3; */
+  --color-texts: #fff;
+}
+html[data-theme='red'] {
+  --color-primary: #f5222d;
+  --color-texts: #000;
+}
+
+html[data-theme='volcano'] {
+  --color-primary: #fa541c;
+  --color-texts: #000;
+}
+
+html[data-theme='orange'] {
+  --color-primary: #fa8c16;
+  --color-texts: #000;
+}
+
+html[data-theme='gold'] {
+  --color-primary: #faad14;
+  --color-texts: #000;
+}
+html[data-theme='yellow'] {
+  --color-primary: #fadb14;
+  --color-texts: #000;
+}
+
+html[data-theme='lime'] {
+  --color-primary: #a0d911;
+  --color-texts: #000;
+}
+
+html[data-theme='green'] {
+  --color-primary: #52c41a;
+  --color-texts: #000;
+}
+html[data-theme='cyan'] {
+  --color-primary: #13c2c2;
+  --color-texts: #000;
+}
+
+html[data-theme='blue'] {
+  --color-primary: #1677ff;
+  --color-texts: #000;
+}
+
+html[data-theme='geekblue'] {
+  --color-primary: #2f54eb;
+  --color-texts: #fff;
+}
+html[data-theme='purple'] {
+  --color-primary: #722ed1;
+  --color-texts: #fff;
+}
+
+html[data-theme='magenta'] {
+  --color-primary: #eb2f96;
+  --color-texts: #fff;
+}
+
+html[data-theme='grey'] {
+  --color-primary: #666666;
+  --color-texts: #fff;
+}

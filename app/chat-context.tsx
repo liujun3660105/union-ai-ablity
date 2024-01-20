@@ -4,11 +4,12 @@ import { useRequest } from 'ahooks';
 import { ChatHistoryResponse, DialogueListResponse, IChatDialogueSchema } from '@/types/chat';
 import { useSearchParams } from 'next/navigation';
 import { STORAGE_THEME_KEY } from '@/utils';
+import { Theme } from 'daisyui/src';
 
-type ThemeMode = 'dark' | 'light';
+// type ThemeMode = 'dark' | 'light';
 
 interface IChatContext {
-  mode: ThemeMode;
+  mode: Theme;
   isContract?: boolean;
   isMenuExpand?: boolean;
   scene: IChatDialogueSchema['chat_mode'] | (string & {});
@@ -18,7 +19,7 @@ interface IChatContext {
   modelList: Array<string>;
   agentList: string[];
   dialogueList?: DialogueListResponse;
-  setMode: (mode: ThemeMode) => void;
+  setMode: (mode: Theme) => void;
   setAgentList?: (val: string[]) => void;
   setModel: (val: string) => void;
   setIsContract: (val: boolean) => void;
@@ -33,8 +34,8 @@ interface IChatContext {
   setDocId: (docId: number) => void;
 }
 
-function getDefaultTheme(): ThemeMode {
-  const theme = localStorage.getItem(STORAGE_THEME_KEY) as ThemeMode;
+function getDefaultTheme(): Theme {
+  const theme = localStorage.getItem(STORAGE_THEME_KEY) as Theme;
   if (theme) return theme;
   return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 }
@@ -75,7 +76,12 @@ const ChatContextProvider = ({ children }: { children: React.ReactElement }) => 
   const [agentList, setAgentList] = useState<string[]>([]);
   const [history, setHistory] = useState<ChatHistoryResponse>([]);
   const [docId, setDocId] = useState<number>();
-  const [mode, setMode] = useState<ThemeMode>();
+  const [mode, setTheme] = useState<Theme>();
+  const setMode = (theme: Theme) => {
+    setTheme(theme);
+    document.documentElement.setAttribute(`data-theme`, theme);
+    localStorage.setItem(STORAGE_THEME_KEY, theme);
+  };
 
   const {
     run: queryDialogueList,
@@ -100,9 +106,10 @@ const ChatContextProvider = ({ children }: { children: React.ReactElement }) => 
     setMode(getDefaultTheme());
   }, []);
 
-  useEffect(() => {
-    setModel(modelList[0]);
-  }, [modelList, modelList?.length]);
+  //这里是从接口里获取mode
+  // useEffect(() => {
+  //   setModel(modelList[0]);
+  // }, [modelList, modelList?.length]);
 
   const currentDialogue = useMemo(() => dialogueList.find((item: any) => item.conv_uid === chatId), [chatId, dialogueList]);
   const contextValue = {
