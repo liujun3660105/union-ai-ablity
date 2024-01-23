@@ -204,7 +204,7 @@ function SideBar() {
   }, []);
 
   useEffect(() => {
-    queryDialogueList();
+    // queryDialogueList();
   }, []);
 
   useEffect(() => {
@@ -212,10 +212,10 @@ function SideBar() {
   }, [mode]);
   const handleChangeRoute = (item: { key: string; keyPath: string[] }) => {
     const path = item.keyPath.reverse().join('/');
-    if (path.includes('qa')) {
-      window.open('http://211.94.218.104:3000/');
-      return;
-    }
+    // if (path.includes('qa')) {
+    //   window.open('http://211.94.218.104:3000/');
+    //   return;
+    // }
     if (path.includes('iq')) {
       window.open('http://211.94.218.104:7860/');
       return;

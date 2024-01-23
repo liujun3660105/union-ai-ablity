@@ -76,7 +76,7 @@ const ChatContextProvider = ({ children }: { children: React.ReactElement }) => 
   const [agentList, setAgentList] = useState<string[]>([]);
   const [history, setHistory] = useState<ChatHistoryResponse>([]);
   const [docId, setDocId] = useState<number>();
-  const [mode, setTheme] = useState<Theme>();
+  const [mode, setTheme] = useState<Theme>('light');
   const setMode = (theme: Theme) => {
     setTheme(theme);
     document.documentElement.setAttribute(`data-theme`, theme);
@@ -97,10 +97,15 @@ const ChatContextProvider = ({ children }: { children: React.ReactElement }) => 
     },
   );
 
-  const { data: modelList = [] } = useRequest(async () => {
-    const [, res] = await apiInterceptors(getUsableModels());
-    return res ?? [];
-  });
+  const { data: modelList = [] } = useRequest(
+    async () => {
+      const [, res] = await apiInterceptors(getUsableModels());
+      return res ?? [];
+    },
+    {
+      manual: true,
+    },
+  );
 
   useEffect(() => {
     setMode(getDefaultTheme());

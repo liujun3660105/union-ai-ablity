@@ -37,6 +37,7 @@ class MyDocument extends Document {
   render() {
     return (
       <Html lang="en">
+        <title>联通大模型</title>
         <Head>
           <link rel="icon" href="/favicon.ico" />
           <meta name="description" content="Revolutionizing Database Interactions with Private LLM Technology" />

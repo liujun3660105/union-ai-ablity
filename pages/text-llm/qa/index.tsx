@@ -1,5 +1,9 @@
 import React from 'react';
 
 export default function index() {
-  return <div>这是大语言模型智能问答</div>;
+  return (
+    <div className="h-full">
+      <iframe src="http://211.94.218.104:3000/" className="w-full h-full" />
+    </div>
+  );
 }

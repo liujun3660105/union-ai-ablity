@@ -15,7 +15,6 @@ import { ConfigProvider, MappingAlgorithm, theme } from 'antd';
 import zhCN from 'antd/locale/zh_CN';
 import enUS from 'antd/locale/en_US';
 import ThemeColor from '@/styles/colors';
-import Head from 'next/head';
 
 type ThemeMode = ReturnType<typeof useColorScheme>['mode'];
 
@@ -80,10 +79,10 @@ function LayoutWrapper({ children }: { children: React.ReactNode }) {
       locale={i18n.language === 'en' ? enUS : zhCN}
       theme={{
         token: {
-          colorPrimary: ThemeColor[mode || 'light']['base-200'],
+          colorPrimary: ThemeColor[mode]['base-200'],
           // colorBgContainer: ThemeColor[mode || 'light']['base-300'],
-          colorBgBase: ThemeColor[mode || 'light']['base-300'],
-          colorText: ThemeColor[mode || 'light']['base-content'],
+          colorBgBase: ThemeColor[mode]['base-300'],
+          colorText: ThemeColor[mode]['base-content'],
           // colorInfoText: ThemeColor[mode || 'light']['base-content'],
           // colorPrimaryTextActive: ThemeColor[mode || 'light']['base-content'],
           // colorInfoTextActive: ThemeColor[mode || 'light']['base-content'],
@@ -113,7 +112,7 @@ function LayoutWrapper({ children }: { children: React.ReactNode }) {
         },
         components: {
           Menu: {
-            colorPrimary: ThemeColor[mode || 'light']['base-content'],
+            colorPrimary: ThemeColor[mode]['base-content'],
           },
         },
 

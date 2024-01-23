@@ -22,12 +22,17 @@ const Home: NextPage = () => {
   const [loading, setLoading] = useState(false);
   const [chatSceneLoading, setChatSceneLoading] = useState<boolean>(false);
 
-  const { data: scenesList = [] } = useRequest(async () => {
-    setChatSceneLoading(true);
-    const [, res] = await apiInterceptors(postScenes());
-    setChatSceneLoading(false);
-    return res ?? [];
-  });
+  const { data: scenesList = [] } = useRequest(
+    async () => {
+      setChatSceneLoading(true);
+      const [, res] = await apiInterceptors(postScenes());
+      setChatSceneLoading(false);
+      return res ?? [];
+    },
+    {
+      manual: true,
+    },
+  );
 
   const submit = async (message: string) => {
     setLoading(true);
