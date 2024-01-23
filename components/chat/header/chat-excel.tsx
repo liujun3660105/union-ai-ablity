@@ -1,7 +1,7 @@
 import ExcelUpload from './excel-upload';
 import { LinkOutlined } from '@ant-design/icons';
 import { useContext } from 'react';
-import { ChatContext } from '@/app/chat-context';
+import { ChatContext } from '@/context/chat-context';
 
 interface Props {
   onComplete?: () => void;

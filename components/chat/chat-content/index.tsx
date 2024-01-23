@@ -6,7 +6,7 @@ import rehypeRaw from 'rehype-raw';
 import classNames from 'classnames';
 import { Tag } from 'antd';
 import { renderModelIcon } from '../header/model-selector';
-import { ChatContext } from '@/app/chat-context';
+import { ChatContext } from '@/context/chat-context';
 import markdownComponents from './config';
 
 interface Props {

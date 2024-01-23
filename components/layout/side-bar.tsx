@@ -1,4 +1,4 @@
-import { ChatContext } from '@/app/chat-context';
+import { ChatContext } from '@/context/chat-context';
 import { apiInterceptors, delDialogue } from '@/client/api';
 import { STORAGE_LANG_KEY, STORAGE_THEME_KEY } from '@/utils';
 import { DarkSvg, SunnySvg, ModelSvg } from '@/components/icons';
@@ -27,6 +27,8 @@ import { ReactNode, useCallback, useContext, useEffect, useMemo, useState } from
 import { useTranslation } from 'react-i18next';
 import { getItems } from './menu';
 import ColorPalettes from '../color/color-palettes';
+import { KeyboardReturnSharp } from '@mui/icons-material';
+import { relativeTimeRounding } from 'moment';
 // import useRoute from '@/hooks/use-route';
 
 type SettingItem = {
@@ -210,8 +212,19 @@ function SideBar() {
   }, [mode]);
   const handleChangeRoute = (item: { key: string; keyPath: string[] }) => {
     const path = item.keyPath.reverse().join('/');
+    if (path.includes('qa')) {
+      window.open('http://211.94.218.104:3000/');
+      return;
+    }
+    if (path.includes('iq')) {
+      window.open('http://211.94.218.104:7860/');
+      return;
+    }
     replace(path);
   };
+  function routeToMain() {
+    replace('/');
+  }
 
   if (!isMenuExpand) {
     return (
@@ -219,6 +232,7 @@ function SideBar() {
         <Link href="/" className="px-2 py-3">
           <Image src="/china-uniform-small.png" alt="China-Uniform" width={63} height={63} className="w-[63px] h-[46px]" />
         </Link>
+
         {/* <div>
           <Link href="/" className="flex items-center justify-center my-4 mx-auto w-12 h-12 bg-theme-primary rounded-full text-white">
             <PlusOutlined className="text-lg" />
@@ -270,6 +284,7 @@ function SideBar() {
       <Link href="/" className="p-2">
         <Image src="/china-uniform-big.png" alt="DB-GPT" width={239} height={60} className="w-full h-full" />
       </Link>
+
       {/* <Link href="/" className="flex items-center justify-center mb-4 mx-4 h-11 bg-theme-primary rounded text-white">
         <PlusOutlined className="mr-2" />
         <span>{t('new_chat')}</span>

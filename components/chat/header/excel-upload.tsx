@@ -2,7 +2,7 @@ import { PropsWithChildren, useContext, useState } from 'react';
 import { Upload, UploadProps, Button, message, UploadFile, Tooltip } from 'antd';
 import { LinkOutlined, SelectOutlined, UploadOutlined } from '@ant-design/icons';
 import { apiInterceptors, postChatModeParamsFileLoad } from '@/client/api';
-import { ChatContext } from '@/app/chat-context';
+import { ChatContext } from '@/context/chat-context';
 
 interface Props {
   convUid: string;

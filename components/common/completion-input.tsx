@@ -5,7 +5,7 @@ import PromptBot from './prompt-bot';
 import DocUpload from '../chat/doc-upload';
 import DocList from '../chat/doc-list';
 import { IDocument } from '@/types/knowledge';
-import { ChatContext } from '@/app/chat-context';
+import { ChatContext } from '@/context/chat-context';
 import { apiInterceptors, getDocumentList } from '@/client/api';
 
 type TextAreaProps = Omit<Parameters<typeof Input.TextArea>[0], 'value' | 'onPressEnter' | 'onChange' | 'onSubmit'>;

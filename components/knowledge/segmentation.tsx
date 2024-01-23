@@ -5,7 +5,7 @@ import Icon from '@ant-design/icons';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import StrategyForm from './strategy-form';
-import { DoneIcon, PendingIcon, SyncIcon, FileError } from '@/components/icons';
+import { DoneIcon, PendingIcon, SyncIcon, FileError, FileDone } from '@/components/icons';
 
 type IProps = {
   spaceName: string;
@@ -130,7 +130,7 @@ export default function Segmentation(props: IProps) {
             case 'TEXT':
             case 'URL':
               return fields?.map((field) => (
-                <StrategyForm strategies={strategies} docType={docType} fileName={files![field.name].name} field={field} />
+                <StrategyForm key={field.key} strategies={strategies} docType={docType} fileName={files![field.name].name} field={field} />
               ));
             case 'DOCUMENT':
               return (

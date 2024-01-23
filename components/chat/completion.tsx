@@ -1,9 +1,9 @@
 import { useState, useRef, useEffect, useMemo, useContext } from 'react';
 import { useSearchParams } from 'next/navigation';
-import MonacoEditor from './monaco-editor';
+// import MonacoEditor from './monaco-editor';
 import ChatContent from './chat-content';
 import ChatFeedback from './chat-feedback';
-import { ChatContext } from '@/app/chat-context';
+import { ChatContext } from '@/context/chat-context';
 import { FeedBack, IChatDialogueMessageSchema } from '@/types/chat';
 import classNames from 'classnames';
 import { Empty, Modal, message, Tooltip } from 'antd';
@@ -223,7 +223,7 @@ const Completion = ({ messages, onSubmit }: Props) => {
           setJsonModalOpen(false);
         }}
       >
-        <MonacoEditor className="w-full h-[500px]" language="json" value={jsonValue} />
+        {/* <MonacoEditor className="w-full h-[500px]" language="json" value={jsonValue} /> */}
       </Modal>
     </>
   );

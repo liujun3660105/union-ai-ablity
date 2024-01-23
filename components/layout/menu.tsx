@@ -25,6 +25,7 @@ export const getItems: (t: TFunction<'translation', undefined>) => MenuItem[] = 
       getItem(t('Emotion_Classification'), 'ec', <MailOutlined />),
     ]),
     getItem(t('Image_LLM'), 'img-llm', <AppstoreOutlined />, [
+      getItem(t('Image_QA'), 'iq', <MailOutlined />),
       getItem(t('Image_Generation'), 'ig', <MailOutlined />),
       getItem(t('Similar_Search'), 'ss', <MailOutlined />),
       getItem(t('Feature_Extraction'), 'fe', <MailOutlined />),

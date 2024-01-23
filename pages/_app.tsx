@@ -5,11 +5,11 @@ import { CssVarsProvider, ThemeProvider, useColorScheme } from '@mui/joy/styles'
 import { joyTheme } from '@/defaultTheme';
 import TopProgressBar from '@/components/layout/top-progress-bar';
 import { useTranslation } from 'react-i18next';
-import { ChatContext, ChatContextProvider } from '@/app/chat-context';
+import { ChatContext, ChatContextProvider } from '@/context/chat-context';
 import classNames from 'classnames';
 import '../styles/globals.css';
 import '../nprogress.css';
-import '../app/i18n';
+import '../context/i18n';
 import { STORAGE_LANG_KEY, STORAGE_THEME_KEY } from '@/utils';
 import { ConfigProvider, MappingAlgorithm, theme } from 'antd';
 import zhCN from 'antd/locale/zh_CN';

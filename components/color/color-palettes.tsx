@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, useMemo } from 'react';
 import type { MenuProps } from 'antd';
 import { Button, Dropdown, Space } from 'antd';
-import { ChatContext } from '@/app/chat-context';
+import { ChatContext } from '@/context/chat-context';
 // import ThemeColor, { ThemeMode } from '@/styles/colors';
 import { useTranslation } from 'react-i18next';
 import { StarsSvg } from '@/components/icons';

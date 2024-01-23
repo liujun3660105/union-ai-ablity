@@ -1,4 +1,4 @@
-import { ChatContext } from '@/app/chat-context';
+import { ChatContext } from '@/context/chat-context';
 import { IChatDialogueMessageSchema } from '@/types/chat';
 import classNames from 'classnames';
 import { memo, useContext } from 'react';

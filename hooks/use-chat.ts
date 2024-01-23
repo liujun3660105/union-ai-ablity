@@ -1,7 +1,7 @@
 import { EventStreamContentType, fetchEventSource } from '@microsoft/fetch-event-source';
 import { message } from 'antd';
 import { useCallback, useEffect, useMemo } from 'react';
-import i18n from '@/app/i18n';
+import i18n from '@/context/i18n';
 
 type Props = {
   queryAgentURL?: string;

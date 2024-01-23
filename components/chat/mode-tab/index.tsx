@@ -1,6 +1,6 @@
-import './index.css';
+import './index.module.css';
 import { useContext } from 'react';
-import { ChatContext } from '@/app/chat-context';
+import { ChatContext } from '@/context/chat-context';
 import { Radio } from 'antd';
 import Icon, { AppstoreFilled } from '@ant-design/icons';
 import { StarsSvg } from '@/components/icons';

@@ -5,7 +5,7 @@ import { Button } from 'antd';
 import AutoAwesomeMotionIcon from '@mui/icons-material/AutoAwesomeMotion';
 import { Input, Tree, Empty, Tabs } from 'antd';
 import type { DataNode } from 'antd/es/tree';
-import MonacoEditor from './monaco-editor';
+// import MonacoEditor from './monaco-editor';
 import { sendGetRequest, sendSpacePostRequest } from '@/utils/request';
 import { useSearchParams } from 'next/navigation';
 import { OnChange } from '@monaco-editor/react';
@@ -58,7 +58,7 @@ function DbEditorContent({ editorValue, chartData, tableData, handleChange }: IP
     <>
       <div className="flex-1 flex overflow-hidden">
         <div className="flex-1" style={{ flexShrink: 0, overflow: 'auto' }}>
-          <MonacoEditor value={editorValue?.sql || ''} language="mysql" onChange={handleChange} thoughts={editorValue?.thoughts || ''} />
+          {/* <MonacoEditor value={editorValue?.sql || ''} language="mysql" onChange={handleChange} thoughts={editorValue?.thoughts || ''} /> */}
         </div>
         {chartWrapper}
       </div>

@@ -1,7 +1,7 @@
 import { ChartData } from '@/types/chat';
 import { Chart } from '@berryv/g2-react';
 import { useContext } from 'react';
-import { ChatContext } from '@/app/chat-context';
+import { ChatContext } from '@/context/chat-context';
 
 export default function LineChart({ chart }: { chart: ChartData }) {
   const { mode } = useContext(ChatContext);

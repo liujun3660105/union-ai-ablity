@@ -1,4 +1,4 @@
-import { ChatContext } from '@/app/chat-context';
+import { ChatContext } from '@/context/chat-context';
 import { apiInterceptors, postChatModeParamsList } from '@/client/api';
 import { IDB } from '@/types/chat';
 import { dbMapper } from '@/utils';

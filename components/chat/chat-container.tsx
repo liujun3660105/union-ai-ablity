@@ -4,7 +4,7 @@ import useChat from '@/hooks/use-chat';
 import Completion from './completion';
 import { ChartData, ChatHistoryResponse } from '@/types/chat';
 import { apiInterceptors, getChatHistory } from '@/client/api';
-import { ChatContext } from '@/app/chat-context';
+import { ChatContext } from '@/context/chat-context';
 import Header from './header';
 import Chart from '../chart';
 import classNames from 'classnames';

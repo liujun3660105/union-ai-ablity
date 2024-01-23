@@ -19,7 +19,7 @@ import {
 } from '@mui/joy';
 import { message, Tooltip } from 'antd';
 import { apiInterceptors, getChatFeedBackItme, postChatFeedBackForm } from '@/client/api';
-import { ChatContext } from '@/app/chat-context';
+import { ChatContext } from '@/context/chat-context';
 import { ChatFeedBackSchema } from '@/types/db';
 import { useTranslation } from 'react-i18next';
 import { FeedBack } from '@/types/chat';

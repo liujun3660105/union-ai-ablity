@@ -69,14 +69,58 @@ const Home: NextPage = () => {
   }
 
   return (
-    <div className=" flex flex-col justify-center items-center overflow-hidden relative">
-      <div className="flex flex-col justify-center items-center gap-10 absolute ">
-        <span>站式企业级大模型平台，提供先进的生成式AI生产及应用全流程开发</span>
-        <span className="text-4xl">联通智能大模型平台</span>
-        <span>个人和企业客户可通过联通智能大模型平台接入使用</span>
-      </div>
-      <div>
-        <video src="/image.mp4" poster="/poster.jpeg" muted={true} autoPlay={true} loop={true}></video>
+    <div className="px-4 h-screen flex flex-col justify-center items-center overflow-hidden">
+      <div className="max-w-3xl max-h-screen overflow-y-auto">
+        <Image
+          src="/LOGO.png"
+          alt="Revolutionizing Database Interactions with Private LLM Technology"
+          width={856}
+          height={160}
+          className="w-full mt-4"
+          unoptimized
+        />
+        <Divider className="!text-[#878c93] !my-6" plain>
+          {t('Quick_Start')}
+        </Divider>
+        <Spin spinning={chatSceneLoading}>
+          <div className="flex flex-wrap -m-1 md:-m-2">
+            {scenesList.map((scene) => (
+              <div
+                key={scene.chat_scene}
+                className="w-full sm:w-1/2 p-1 md:p-2"
+                onClick={() => {
+                  handleNewChat(scene);
+                }}
+              >
+                <div
+                  className={classNames(
+                    'flex flex-row justify-center h-[102px] min-h-min  rounded p-4 cursor-pointer hover:-translate-y-1 transition-[transform_shadow] duration-300 hover:shadow-[0_14px_20px_-10px_rgba(100,100,100,.1)]',
+                    { 'grayscale !cursor-no-drop': scene.show_disable },
+                  )}
+                >
+                  {renderSceneIcon(scene.chat_scene)}
+                  <div className="flex flex-col flex-1">
+                    <h2 className="flex items-center text-lg font-sans font-semibold">
+                      {scene.scene_name}
+                      {scene.show_disable && <Tag className="ml-2">Comming soon</Tag>}
+                    </h2>
+                    <p className="opacity-80 line-clamp-2">{scene.scene_describe}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </Spin>
+        <div className="mt-8 mb-2">
+          <ModelSelector
+            onChange={(newModel: string) => {
+              setModel(newModel);
+            }}
+          />
+        </div>
+        <div className="flex flex-1 w-full mb-4">
+          <CompletionInput loading={loading} onSubmit={submit} />
+        </div>
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { ChatContext } from '@/app/chat-context';
+import { ChatContext } from '@/context/chat-context';
 import dynamic from 'next/dynamic';
 
 const DbEditor = dynamic(() => import('@/components/chat/db-editor'), { ssr: false });

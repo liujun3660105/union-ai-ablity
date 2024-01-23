@@ -1,13 +1,13 @@
 import { Empty, Row, Col, Select, Tooltip } from 'antd';
 import { Advice, Advisor } from '@antv/ava';
 import { Chart } from '@berryv/g2-react';
-import i18n from '@/app/i18n';
+import i18n from '@/context/i18n';
 import { customizeAdvisor, getVisAdvices } from './advisor/pipeline';
 import { useContext, useEffect, useMemo, useState } from 'react';
 import { defaultAdvicesFilter } from './advisor/utils';
 import { AutoChartProps, ChartType, CustomAdvisorConfig, CustomChart, Specification } from './types';
 import { customCharts } from './charts';
-import { ChatContext } from '@/app/chat-context';
+import { ChatContext } from '@/context/chat-context';
 
 const { Option } = Select;
 

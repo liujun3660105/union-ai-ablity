@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import ChatExcel from './chat-excel';
-import { ChatContext } from '@/app/chat-context';
+import { ChatContext } from '@/context/chat-context';
 import ModeTab from '@/components/chat/mode-tab';
 import ModelSelector from '@/components/chat/header/model-selector';
 import DBSelector from './db-selector';

@@ -1,4 +1,4 @@
-import { ChatContext } from '@/app/chat-context';
+import { ChatContext } from '@/context/chat-context';
 import { ChatHistoryResponse } from '@/types/chat';
 import { useCallback, useContext } from 'react';
 import useChat from './use-chat';

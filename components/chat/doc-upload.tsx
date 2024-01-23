@@ -1,4 +1,4 @@
-import { ChatContext } from '@/app/chat-context';
+import { ChatContext } from '@/context/chat-context';
 import { apiInterceptors, uploadDocument } from '@/client/api';
 
 import useSummary from '@/hooks/use-summary';

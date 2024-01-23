@@ -1,4 +1,4 @@
-import { ChatContext } from '@/app/chat-context';
+import { ChatContext } from '@/context/chat-context';
 import { ChartData } from '@/types/chat';
 import { Chart } from '@berryv/g2-react';
 import { useContext } from 'react';

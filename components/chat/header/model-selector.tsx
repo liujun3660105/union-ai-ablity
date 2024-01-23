@@ -2,7 +2,7 @@
  * multi-models selector
  */
 
-import { ChatContext } from '@/app/chat-context';
+import { ChatContext } from '@/context/chat-context';
 import { Select } from 'antd';
 import { MODEL_ICON_MAP } from '@/utils/constants';
 import Image from 'next/image';
