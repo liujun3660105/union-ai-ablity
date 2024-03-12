@@ -3,7 +3,7 @@ import ReactMarkdown from 'react-markdown';
 import { Table, Image, Tag, Tabs, TabsProps, Popover } from 'antd';
 import { format } from 'sql-formatter';
 import { Reference } from '@/types/chat';
-import { AutoChart, BackEndChartType, getChartType } from '@/components/chart';
+// import { AutoChart, BackEndChartType, getChartType } from '@/components/chart';
 import { CodePreview } from './code-preview';
 import { Datum } from '@antv/ava';
 import rehypeRaw from 'rehype-raw';
@@ -125,7 +125,7 @@ const extraComponents: MarkdownComponent = {
   'chart-view': function ({ content, children }) {
     let data: {
       data: Datum[];
-      type: BackEndChartType;
+      type: any;
       sql: string;
     };
     try {
@@ -149,11 +149,11 @@ const extraComponents: MarkdownComponent = {
         })
       : [];
 
-    const ChartItem = {
-      key: 'chart',
-      label: 'Chart',
-      children: <AutoChart data={data?.data} chartType={getChartType(data?.type)} />,
-    };
+    // const ChartItem = {
+    //   key: 'chart',
+    //   label: 'Chart',
+    //   children: <AutoChart data={data?.data} chartType={getChartType(data?.type)} />,
+    // };
     const SqlItem = {
       key: 'sql',
       label: 'SQL',
@@ -164,7 +164,7 @@ const extraComponents: MarkdownComponent = {
       label: 'Data',
       children: <Table dataSource={data?.data} columns={columns} />,
     };
-    const TabItems: TabsProps['items'] = data?.type === 'response_table' ? [DataItem, SqlItem] : [ChartItem, SqlItem, DataItem];
+    const TabItems: TabsProps['items'] = data?.type === 'response_table' ? [DataItem, SqlItem] : [SqlItem, DataItem];
 
     return (
       <div>

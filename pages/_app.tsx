@@ -61,9 +61,10 @@ function LayoutWrapper({ children }: { children: React.ReactNode }) {
   function handleResize() {
     if (document.body.clientWidth < 992) {
       setIsMenuExpand(false);
-    } else {
-      setIsMenuExpand(true);
     }
+    // else {
+    //   setIsMenuExpand(true);
+    // }
   }
   useEffect(() => {
     window.addEventListener('resize', handleResize);
@@ -114,6 +115,11 @@ function LayoutWrapper({ children }: { children: React.ReactNode }) {
           Menu: {
             colorPrimary: ThemeColor[mode]['base-content'],
           },
+          Button: {
+            // colorPrimary: ThemeColor[mode]['base-content'],
+            colorText: ThemeColor[mode]['base-content'],
+            algorithm: true,
+          },
         },
 
         // algorithm: mode === 'dark' ? antdDarkTheme : undefined,
@@ -124,7 +130,7 @@ function LayoutWrapper({ children }: { children: React.ReactNode }) {
           <SideBar />
         </div>
         <div className="flex flex-col flex-1 relative overflow-hidden">
-          <div className="shadow border-b-2 h-24 text-center text-xl flex items-center justify-center">天津联通大模型基础平台</div>
+          <div className="shadow border-b-2 h-24 text-center text-xl flex flex-none items-center justify-center">天津联通大模型基础平台</div>
           {children}
         </div>
       </div>

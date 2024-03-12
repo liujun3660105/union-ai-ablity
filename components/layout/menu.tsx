@@ -31,6 +31,10 @@ export const getItems: (t: TFunction<'translation', undefined>) => MenuItem[] = 
       getItem(t('Feature_Extraction'), 'fe', <MailOutlined />),
       getItem(t('Object_Recognition'), 'or', <MailOutlined />),
     ]),
+    getItem(t('Agent'), 'agent', <AppstoreOutlined />, [
+      getItem(t('MapAgent'), 'map-agent', <MailOutlined />),
+      getItem(t('DocsAgent'), 'docs-agent', <MailOutlined />),
+    ]),
 
     getItem(t('Video_LLM'), 'video-llm', <SettingOutlined />, [getItem(t('Video_Generation'), 'vg')]),
   ];

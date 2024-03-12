@@ -22,7 +22,8 @@ import { ItemType } from 'antd/es/menu/hooks/useItems';
 import copy from 'copy-to-clipboard';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+// import { useRouter } from 'next/router';
+import { useRouter,usePathname } from 'next/navigation';
 import { ReactNode, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getItems } from './menu';
@@ -60,7 +61,8 @@ function smallMenuItemStyle(active?: boolean) {
 
 function SideBar() {
   const { chatId, scene, isMenuExpand, dialogueList, queryDialogueList, refreshDialogList, setIsMenuExpand, mode, setMode } = useContext(ChatContext);
-  const { pathname, replace } = useRouter();
+  const { replace,push } = useRouter();
+  const pathname = usePathname();
   const { t, i18n } = useTranslation();
 
   const [logo, setLogo] = useState<string>('/LOGO_1.png');
@@ -212,15 +214,18 @@ function SideBar() {
   }, [mode]);
   const handleChangeRoute = (item: { key: string; keyPath: string[] }) => {
     const path = item.keyPath.reverse().join('/');
-    // if (path.includes('qa')) {
-    //   window.open('http://211.94.218.104:3000/');
+    push(`/${path}`,{scroll:false})
+
+    // console.log('path',path)
+    // // if (path.includes('qa')) {
+    // //   window.open('http://211.94.218.104:3000/');
+    // //   return;
+    // // }
+    // if (path.includes('iq')) {
+    //   window.open('http://211.94.218.104:7860/');
     //   return;
     // }
-    if (path.includes('iq')) {
-      window.open('http://211.94.218.104:7860/');
-      return;
-    }
-    replace(path);
+    // replace(path);
   };
   function routeToMain() {
     replace('/');
@@ -282,7 +287,7 @@ function SideBar() {
     <div className="flex flex-col h-screen">
       {/* LOGO  bg-white dark:bg-[#232734] */}
       <Link href="/" className="p-2">
-        <Image src="/china-uniform-big.png" alt="DB-GPT" width={239} height={60} className="w-full h-full" />
+        <Image src="/china-uniform-big.png" priority alt="DB-GPT" width={239} height={60} className="w-full h-full" />
       </Link>
 
       {/* <Link href="/" className="flex items-center justify-center mb-4 mx-4 h-11 bg-theme-primary rounded text-white">
