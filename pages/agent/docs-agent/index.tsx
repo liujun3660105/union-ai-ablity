@@ -1,10 +1,11 @@
 import React, { useState, useCallback } from 'react';
-import { message } from 'antd';
+import { Button, Divider, message } from 'antd';
 import ConfigForm from './form';
 import useChat from '@/hooks/use-chat';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 import markdownComponents from '@/components/chat/chat-content/config';
+import { CopyFilled } from '@ant-design/icons';
 
 function formatMarkdownVal(val: string) {
   return val
@@ -23,7 +24,7 @@ interface RequirementFormProps {
 }
 
 export default function Index() {
-  const chat = useChat({ queryAgentURL: '/api/v1/chat/docs-agent' });
+  const { chat, stopSSE } = useChat({ queryAgentURL: '/api/v1/chat/docs-agent' });
   const [competition, setCompetition] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -50,9 +51,9 @@ export default function Index() {
         setIsLoading(false);
         // setCompetition("");
       },
-      onError: (msg) => {
+      onError: (msg, e) => {
         message.error({
-          content: '请求错误，请重新尝试!',
+          content: '请检查api_key,并重新尝试!',
           duration: 2,
         });
         setIsLoading(false);
@@ -60,16 +61,29 @@ export default function Index() {
       },
     });
   }, []);
+  const stop = useCallback(() => {
+    stopSSE();
+    setIsLoading(false);
+  }, []);
 
   return (
     <div className="flex flex-1 max-h-[calc(100vh-6rem)] gap-1 ">
-      <div className=" flex-1 bg-base-300 flex overflow-y-auto">
-        <ConfigForm onFinish={onFinish} loading={isLoading} />
+      <div className=" flex-1 bg-base-300 overflow-y-auto">
+        <ConfigForm stop={stop} onFinish={onFinish} loading={isLoading} />
       </div>
-      <div className="flex-1 bg-base-300 overflow-y-auto p-6">
-        <ReactMarkdown components={{ ...markdownComponents }} rehypePlugins={[rehypeRaw]} className=" mb-2">
-          {formatMarkdownVal(competition || '')}
-        </ReactMarkdown>
+      <div className="flex-1 bg-base-300 flex-col">
+        {competition.length > 0 && (
+          <div className=" text-center flex-none mb-2 align-middle p-4 border-b-2">
+            <Button icon={<CopyFilled />}></Button>
+          </div>
+        )}
+
+        {/* <Divider /> */}
+        <div className="overflow-y-auto flex-1 max-h-full ">
+          <ReactMarkdown components={{ ...markdownComponents }} rehypePlugins={[rehypeRaw]} className=" mb-2">
+            {formatMarkdownVal(competition || '')}
+          </ReactMarkdown>
+        </div>
       </div>
     </div>
   );

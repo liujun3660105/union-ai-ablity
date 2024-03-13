@@ -18,7 +18,7 @@ import SyncIcon from './sync-icon';
 import DoneIcon from './done-icon';
 import FileError from './file-error';
 import ColorPalette from './color-palette';
-
+import Stop from './stop';
 export {
   ColorfulDashboard,
   ColorfulData,
@@ -40,4 +40,5 @@ export {
   DoneIcon,
   FileError,
   ColorPalette,
+  Stop,
 };

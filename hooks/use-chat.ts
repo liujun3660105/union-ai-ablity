@@ -1,6 +1,6 @@
 import { EventStreamContentType, fetchEventSource } from '@microsoft/fetch-event-source';
 import { message } from 'antd';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 import i18n from '@/context/i18n';
 
 type Props = {
@@ -17,8 +17,8 @@ type ChatParams = {
 };
 
 const useChat = ({ queryAgentURL = '/api/v1/chat/completions' }: Props) => {
-  const ctrl = useMemo(() => new AbortController(), []);
-
+  // const ctrl = useMemo(() => new AbortController(), []);
+  const ctrolRef = useRef(new AbortController());
   const chat = useCallback(
     async ({ data, onMessage, onClose, onDone, onError }: ChatParams) => {
       // if (!data?.user_input && !data?.doc_id) {
@@ -30,7 +30,6 @@ const useChat = ({ queryAgentURL = '/api/v1/chat/completions' }: Props) => {
         ...data,
         // conv_uid: chatId,
       };
-      console.log('parmas',parmas)
 
       // if (!parmas.conv_uid) {
       //   message.error('conv_uid 不存在，请刷新后重试');
@@ -44,7 +43,7 @@ const useChat = ({ queryAgentURL = '/api/v1/chat/completions' }: Props) => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(parmas),
-          signal: ctrl.signal,
+          signal: ctrolRef.current.signal,
           openWhenHidden: true,
           async onopen(response) {
             if (response.ok && response.headers.get('content-type') === EventStreamContentType) {
@@ -52,16 +51,17 @@ const useChat = ({ queryAgentURL = '/api/v1/chat/completions' }: Props) => {
             }
           },
           onclose() {
-            ctrl.abort();
+            ctrolRef.current.abort();
             onClose?.();
           },
           onerror(err) {
+            console.log('err', err);
             throw new Error(err);
+            // onError(''err);
           },
           onmessage: (event) => {
-            console.log("🚀 ~ event:", event)
             const message = event.data?.replaceAll('\\n', '\n');
-            onMessage?.(message)
+            onMessage?.(message);
             // if (message === '[DONE]') {
             //   onDone?.();
             // } else if (message?.startsWith('[ERROR]')) {
@@ -72,7 +72,7 @@ const useChat = ({ queryAgentURL = '/api/v1/chat/completions' }: Props) => {
           },
         });
       } catch (err) {
-        ctrl.abort();
+        ctrolRef.current.abort();
         onError?.('Sorry, We meet some error, please try agin later.', err as Error);
       }
     },
@@ -81,11 +81,16 @@ const useChat = ({ queryAgentURL = '/api/v1/chat/completions' }: Props) => {
 
   useEffect(() => {
     return () => {
-      ctrl.abort();
+      ctrolRef.current.abort();
     };
   }, []);
 
-  return chat;
+  const stopSSE = () => {
+    ctrolRef.current.abort();
+    ctrolRef.current = new AbortController();
+  };
+
+  return { chat, stopSSE };
 };
 
 export default useChat;
