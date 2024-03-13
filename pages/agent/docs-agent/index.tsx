@@ -6,6 +6,7 @@ import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 import markdownComponents from '@/components/chat/chat-content/config';
 import { CopyFilled } from '@ant-design/icons';
+import copy from 'copy-to-clipboard';
 
 function formatMarkdownVal(val: string) {
   return val
@@ -74,7 +75,13 @@ export default function Index() {
       <div className="flex-1 bg-base-300 flex-col">
         {competition.length > 0 && (
           <div className=" text-center flex-none mb-2 align-middle p-4 border-b-2">
-            <Button icon={<CopyFilled />}></Button>
+            <Button
+              onClick={() => {
+                const success = copy(competition);
+                message[success ? 'success' : 'error'](success ? 'Copy success' : 'Copy failed');
+              }}
+              icon={<CopyFilled />}
+            ></Button>
           </div>
         )}
 
