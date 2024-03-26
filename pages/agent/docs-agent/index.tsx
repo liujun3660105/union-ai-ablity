@@ -30,13 +30,11 @@ export default function Index() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   function onFinish(values: RequirementFormProps) {
-    console.log('onFinish', values);
     onSend(values);
   }
 
   const onSend = useCallback((val: RequirementFormProps) => {
     setIsLoading(true);
-    console.log('val', val);
     chat({
       data: val,
       // data: { ...data, chat_mode: scene || 'chat_normal', model_name: model, user_input: content },

@@ -185,7 +185,7 @@ export default function Index(props: ConfigFormProps) {
         </div>
         {customDirectory && (
           <Form.Item name="directory" label="文档目录结构" rules={[{ required: true, message: '请输入文档目录' }]} tooltip="文档的目录结构">
-            <Input.TextArea showCount maxLength={1000} />
+            <Input.TextArea showCount maxLength={10000} />
           </Form.Item>
         )}
 

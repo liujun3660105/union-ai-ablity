@@ -240,3 +240,7 @@ export const updatePrompt = (data: UpdatePromptParams) => {
 export const addPrompt = (data: UpdatePromptParams) => {
   return POST<UpdatePromptParams, []>('/prompt/add', data);
 };
+
+export const bidingFileLoad = ({ data, onUploadProgress }: { data: FormData; onUploadProgress: (e: any) => void }) => {
+  return POST<FormData, ChatHistoryResponse>(`/api/v1/biding-agent/fileUpload`, data, { onUploadProgress });
+};

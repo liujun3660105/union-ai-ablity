@@ -1,10 +1,10 @@
-import React, { useState, useCallback } from "react";
-import ChatMessages from "./chat-messages";
-import ChatInput from "./chat-input";
-import useChat from "@/hooks/use-chat";
-import { ChatMessageProps } from "./chat-message";
+import React, { useState, useCallback } from 'react';
+import ChatMessages from './chat-messages';
+import ChatInput from './chat-input';
+import useChat from '@/hooks/use-chat';
+import { ChatMessageProps } from './chat-message';
 
-export type MsgType = "user" | "assistant" | "system";
+export type MsgType = 'user' | 'assistant' | 'system';
 
 // interface MessageProps{
 //     id:string;
@@ -13,9 +13,14 @@ export type MsgType = "user" | "assistant" | "system";
 //     type:MsgType;
 // }
 
-export default function ChatClient() {
-  const chat = useChat({});
-  const [competition, setCompetition] = useState<string>("");
+interface ChatClientProps {
+  callback?: (v: string) => void;
+}
+
+export default function ChatClient(props: ChatClientProps) {
+  const { callback } = props;
+  const { chat, stopSSE } = useChat({ queryAgentURL: '/api/v1/chat/map-interact' });
+  const [competition, setCompetition] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [messages, setMessages] = useState<ChatMessageProps[]>([]);
   const onSend = useCallback((val: string) => {
@@ -23,66 +28,49 @@ export default function ChatClient() {
     setIsLoading(true);
     const userMessage: ChatMessageProps = {
       id: Date.now().toString(),
-      role: "user",
+      role: 'user',
       content: val,
     };
     // return;
     setMessages((current) => [...current, userMessage]);
 
-    console.log("val", val);
+    console.log('val', val);
     chat({
       data: { query: val },
-      // data: { ...data, chat_mode: scene || 'chat_normal', model_name: model, user_input: content },
-      // chatId,
+
       onMessage: (message) => {
-        systemResponseMessage=message
+        systemResponseMessage = message;
         setCompetition(message);
-        // setIsLoading(true)
-        // tempHistory[index].context = message;
-        // setHistory([...tempHistory]);
       },
-      // onDone: () => {
-      // getChartsData(tempHistory);
-      // resolve();
-      // },
       onClose: () => {
-        console.log('systemResponseMessage',systemResponseMessage)
+        console.log('systemResponseMessage', systemResponseMessage);
         setIsLoading(false);
         const systemMessage: ChatMessageProps = {
           id: Date.now().toString(),
-          role: "system",
+          role: 'system',
           content: systemResponseMessage,
-        }
-          setMessages((current) => [...current, systemMessage]);
-          setCompetition('');
-
-
-        // getChartsData(tempHistory);
-        // resolve();
+        };
+        setMessages((current) => [...current, systemMessage]);
+        setCompetition('');
+        debugger;
+        callback && callback(systemResponseMessage);
       },
-      onError: (message) => {
+      onError: (_message) => {
         setIsLoading(false);
         const systemMessage: ChatMessageProps = {
           id: Date.now().toString(),
-          role: "system",
+          role: 'system',
           content: systemResponseMessage,
-        }
-          setMessages((current) => [...current, systemMessage]);
-          setCompetition('');
-        // tempHistory[index].context = message;
-        // setHistory([...tempHistory]);
-        // resolve();
+        };
+        setMessages((current) => [...current, systemMessage]);
+        setCompetition('');
       },
     });
   }, []);
 
   return (
     <div className=" flex h-[100vh] flex-col space-y-2 p-4">
-      <ChatMessages
-        messages={messages}
-        isLoading={isLoading}
-        competition={competition}
-      />
+      <ChatMessages messages={messages} isLoading={isLoading} competition={competition} />
       <ChatInput onSend={onSend} loading={isLoading} />
       {/* (
       <>
