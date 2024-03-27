@@ -14,11 +14,12 @@ export type MsgType = 'user' | 'assistant' | 'system';
 // }
 
 interface ChatClientProps {
+  clientId: string;
   callback?: (v: string) => void;
 }
 
 export default function ChatClient(props: ChatClientProps) {
-  const { callback } = props;
+  const { callback, clientId } = props;
   const { chat, stopSSE } = useChat({ queryAgentURL: '/api/v1/chat/map-interact' });
   const [competition, setCompetition] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -36,7 +37,7 @@ export default function ChatClient(props: ChatClientProps) {
 
     console.log('val', val);
     chat({
-      data: { query: val },
+      data: { query: val, client_id: clientId },
 
       onMessage: (message) => {
         systemResponseMessage = message;

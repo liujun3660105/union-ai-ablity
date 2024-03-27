@@ -4,14 +4,31 @@ import mapboxgl from 'mapbox-gl';
 import ChatClient from '@/components/chat/chat-client';
 import { extractPotentialGeojson } from '@/utils/data-handle';
 import * as turf from '@turf/turf';
-import { display } from '@mui/system';
+import { wss, WebSocketDataProps } from '@/utils/ws';
+import { Button } from 'antd';
+// import { uniqueId } from 'lodash';
+import { randomUUID } from 'crypto';
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || '';
+
+const wsBaseUrl = process.env.WS_BASE_URL;
 
 export default function Index() {
   const mapRef = useRef<mapboxgl.Map>();
   const mapContainerRef = useRef<HTMLDivElement>();
+  const clientIdRef = useRef<string>(Math.random().toString(36).substring(7));
+  console.log('clientIdRef', clientIdRef.current);
+
+  function onReceiveMsg(res: Object) {
+    const geojson = res as GeoJSON.FeatureCollection;
+    // const geojson = JSON.parse(res);
+    displayFeature(geojson);
+  }
+
   useEffect(() => {
+    wss.connect(`${wsBaseUrl}/api/v1/ws/${clientIdRef.current}`);
+    // wss.send({ socketType: 'geojson' }); // 绑定主题
+    wss.registerCallBack('geojson', onReceiveMsg);
     initMap();
 
     return () => {
@@ -41,6 +58,7 @@ export default function Index() {
   }
 
   function addLayer(geojson: GeoJSON.Feature | GeoJSON.FeatureCollection) {
+    debugger;
     let geometryType = '';
     let mapboxGeomType = '';
     if (geojson.type === 'Feature') {
@@ -51,7 +69,8 @@ export default function Index() {
       geometryType = feature.geometry.type;
     }
     switch (geometryType) {
-      case 'MultiPoint' || 'Point':
+      case 'MultiPoint':
+      case 'Point':
         mapRef.current?.addLayer({
           type: 'circle',
           source: 'feature-collection',
@@ -62,7 +81,8 @@ export default function Index() {
           },
         });
         break;
-      case 'MultiLineString' || 'LineString':
+      case 'MultiLineString':
+      case 'LineString':
         mapRef.current?.addLayer({
           type: 'line',
           source: 'feature-collection',
@@ -75,7 +95,8 @@ export default function Index() {
           },
         });
         break;
-      case 'MultiPolygon' || 'Polygon':
+      case 'MultiPolygon':
+      case 'Polygon':
         mapboxGeomType = 'fill';
         mapRef.current?.addLayer({
           type: 'fill',
@@ -622,22 +643,31 @@ export default function Index() {
   }
 
   const handleRecieveMessage = (msg: string) => {
-    console.log('🚀 ~ handleRecieveMessage ~ msg:', msg);
-    // msg中可能包含了geojson数据
-    debugger;
-    const geojson = extractPotentialGeojson(msg);
-    if (geojson) {
-      displayFeature(geojson);
-    } else {
-    }
+    // console.log('🚀 ~ handleRecieveMessage ~ msg:', msg);
+    // // msg中可能包含了geojson数据
+    // debugger;
+    // const geojson = extractPotentialGeojson(msg);
+    // if (geojson) {
+    //   displayFeature(geojson);
+    // } else {
+    // }
   };
 
   return (
     <div className="flex h-full gap-3">
       <div className="flex-none w-96 bg-base-300">
-        <ChatClient callback={handleRecieveMessage} />
+        <ChatClient callback={handleRecieveMessage} clientId={clientIdRef.current} />
       </div>
-      <div id="map_container" ref={mapContainerRef} className="flex-1 bg-base-300"></div>
+      <div id="map_container" ref={mapContainerRef} className="flex-1 bg-base-300">
+        <Button
+          style={{ zIndex: 2000, position: 'absolute', top: 10, right: 10 }}
+          onClick={() => {
+            wss.send({ socketType: 'fff' });
+          }}
+        >
+          发送请求
+        </Button>
+      </div>
     </div>
   );
 }
