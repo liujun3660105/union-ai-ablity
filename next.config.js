@@ -9,6 +9,7 @@ const nextConfig = {
   },
   env: {
     API_BASE_URL: process.env.API_BASE_URL,
+    WS_BASE_URL: process.env.WS_BASE_URL,
   },
   trailingSlash: true,
   images: { unoptimized: true },

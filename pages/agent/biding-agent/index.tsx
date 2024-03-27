@@ -1,10 +1,30 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import SplitPane from 'react-split-pane';
 import UpLoadFile from '@/components/upload/UploadFile';
 import PDFViewer from '@/components/pdfViewer';
+import { wss } from '@/utils/ws';
+import { Button } from 'antd';
+
 export type FileType = 'Tendering' | 'Biding';
 
 export default function Index() {
+  function onReceiveMsg(res) {
+    console.log('test', res);
+  }
+
+  function onReceiveMsg1(res) {
+    console.log('test1', res);
+  }
+
+  useEffect(() => {
+    // wss.connect('ws://localhost:5002/ws');
+    // wss.registerCallBack('test', onReceiveMsg);
+    // wss.registerCallBack('test1', onReceiveMsg1);
+  }, []);
+
+  function sendMsMessage() {
+    wss.send({ value: 'June', socketType: 'test' });
+  }
   function onTenderingFileSelect() {}
   function onBidingFileSelect() {}
 
@@ -32,7 +52,7 @@ export default function Index() {
           </div>
         </SplitPane>
         <SplitPane minSize="20%" initialSize="40%">
-          <div>fff</div>
+          <Button onClick={sendMsMessage}>发送请求</Button>
         </SplitPane>
       </SplitPane>
     </div>
