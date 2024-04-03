@@ -6,7 +6,7 @@ import { FileType } from '@/pages/agent/biding-agent';
 
 interface PDFViewerProps {
   scale?: number;
-  url: string;
+  url?: string;
   fileType: FileType;
 }
 

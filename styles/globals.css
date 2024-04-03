@@ -3,10 +3,13 @@
 @tailwind utilities;
 @import 'theme.css';
 
+html,
 body {
   margin: 0;
   font-family: var(--joy-fontFamily-body, var(--joy-Josefin Sans, sans-serif));
   line-height: var(--joy-lineHeight-md, 1.5);
+  width: 100wh;
+  height: 100vh;
   /* --antd-primary-color: #0069fe; */
 }
 

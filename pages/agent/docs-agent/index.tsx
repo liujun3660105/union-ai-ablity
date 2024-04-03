@@ -7,6 +7,8 @@ import rehypeRaw from 'rehype-raw';
 import markdownComponents from '@/components/chat/chat-content/config';
 import { CopyFilled } from '@ant-design/icons';
 import copy from 'copy-to-clipboard';
+import { LayoutWrapper as Layout } from '@/components/layout/root-layout';
+import type { ReactElement } from 'react';
 
 function formatMarkdownVal(val: string) {
   return val
@@ -93,3 +95,6 @@ export default function Index() {
     </div>
   );
 }
+Index.getLayout = function getLayout(page: ReactElement) {
+  return <Layout>{page}</Layout>;
+};

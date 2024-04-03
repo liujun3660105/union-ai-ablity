@@ -1,5 +1,5 @@
 import { useRequest } from 'ahooks';
-import { useContext, useState } from 'react';
+import { useContext, useState, ReactElement } from 'react';
 import { Button, Divider, Spin, Tag } from 'antd';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
@@ -14,10 +14,16 @@ import { STORAGE_INIT_MESSAGE_KET } from '@/utils';
 import Icon from '@ant-design/icons/lib/components/Icon';
 import { ColorfulDB, ColorfulPlugin, ColorfulDashboard, ColorfulData, ColorfulExcel, ColorfulDoc, ColorfulChat } from '@/components/icons';
 import classNames from 'classnames';
-const Home: NextPage = () => {
+import { LayoutWrapper as Layout } from '@/components/layout/root-layout';
+import type { NextPageWithLayout } from '@/components/layout/root-layout';
+import { useSession } from 'next-auth/react';
+
+const Home: NextPageWithLayout = () => {
   const router = useRouter();
   const { model, setModel } = useContext(ChatContext);
   const { t } = useTranslation();
+  const { data: session } = useSession();
+  console.log('session', session);
 
   const [loading, setLoading] = useState(false);
   const [chatSceneLoading, setChatSceneLoading] = useState<boolean>(false);
@@ -86,5 +92,7 @@ const Home: NextPage = () => {
     </div>
   );
 };
-
+Home.getLayout = function getLayout(page: ReactElement) {
+  return <Layout>{page}</Layout>;
+};
 export default Home;

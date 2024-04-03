@@ -71,6 +71,7 @@ export default function UploadFile(props: IUploadFileProps) {
     },
     showUploadList: false,
     customRequest: (options) => {
+      const fileId = `${fileType}-${uniqueId()}`;
       setUploadingFile({
         id: Math.random().toString(),
         fileName: options.filename ?? '',
@@ -81,6 +82,7 @@ export default function UploadFile(props: IUploadFileProps) {
       const formData = new FormData();
       formData.append('file', options.file);
       formData.append('fileType', fileType);
+      formData.append('fileId', fileId);
       bidingFileLoad({
         data: formData,
         onUploadProgress: (e) => {
@@ -98,7 +100,7 @@ export default function UploadFile(props: IUploadFileProps) {
           //   void fileQuery.refetch();
           const fileUrl = URL.createObjectURL(file);
           const fileName = file.name;
-          const fileId = uniqueId();
+          const fileId = `${fileType}-${uniqueId()}`;
           const newFile: UploadFileProps = {
             id: fileId,
             fileName,
@@ -106,7 +108,7 @@ export default function UploadFile(props: IUploadFileProps) {
             progress: 100,
             type: fileType,
           };
-          if (fileType === 'Tendering') {
+          if (fileType === FileType.TENDERING) {
             setFileList([newFile]);
           } else {
             const newFileList = fileList.slice();
@@ -136,7 +138,7 @@ export default function UploadFile(props: IUploadFileProps) {
 
   return (
     <div>
-      <h2>请上传{fileType === 'Biding' ? '投标文件' : '招标文件'}</h2>
+      <h2>请上传{fileType === 'biding' ? '投标文件' : '招标文件'}</h2>
       <Dragger {...fileProps}>
         <p className="ant-upload-drag-icon">
           <InboxOutlined />
