@@ -23,7 +23,7 @@ import copy from 'copy-to-clipboard';
 import Image from 'next/image';
 import Link from 'next/link';
 // import { useRouter } from 'next/router';
-import { useRouter,usePathname } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { ReactNode, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getItems } from './menu';
@@ -61,7 +61,7 @@ function smallMenuItemStyle(active?: boolean) {
 
 function SideBar() {
   const { chatId, scene, isMenuExpand, dialogueList, queryDialogueList, refreshDialogList, setIsMenuExpand, mode, setMode } = useContext(ChatContext);
-  const { replace,push } = useRouter();
+  const { replace, push } = useRouter();
   const pathname = usePathname();
   const { t, i18n } = useTranslation();
 
@@ -214,7 +214,7 @@ function SideBar() {
   }, [mode]);
   const handleChangeRoute = (item: { key: string; keyPath: string[] }) => {
     const path = item.keyPath.reverse().join('/');
-    push(`/${path}`,{scroll:false})
+    push(`/${path}`, { scroll: false });
 
     // console.log('path',path)
     // // if (path.includes('qa')) {

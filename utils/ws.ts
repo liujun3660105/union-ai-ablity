@@ -71,8 +71,6 @@ class SocketService {
     };
 
     this.ws.onmessage = (res) => {
-      console.log('res', res);
-      debugger;
       const recvData: WebSocketDataProps = JSON.parse(res.data);
       const stocketType = recvData.socketType; //与后端约定type
       //如果存在，直接调用

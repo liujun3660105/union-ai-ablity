@@ -16,11 +16,13 @@ export type MsgType = 'user' | 'assistant' | 'system';
 interface ChatClientProps {
   clientId: string;
   callback?: (v: string) => void;
+  queryAgentURL?: string;
+  initAIContent?: string;
 }
 
 export default function ChatClient(props: ChatClientProps) {
-  const { callback, clientId } = props;
-  const { chat, stopSSE } = useChat({ queryAgentURL: '/api/v1/chat/map-interact' });
+  const { callback, clientId, queryAgentURL, initAIContent } = props;
+  const { chat, stopSSE } = useChat({ queryAgentURL: queryAgentURL || '/api/v1/chat/map-interact' });
   const [competition, setCompetition] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [messages, setMessages] = useState<ChatMessageProps[]>([]);
@@ -53,7 +55,6 @@ export default function ChatClient(props: ChatClientProps) {
         };
         setMessages((current) => [...current, systemMessage]);
         setCompetition('');
-        debugger;
         callback && callback(systemResponseMessage);
       },
       onError: (_message) => {
@@ -71,7 +72,7 @@ export default function ChatClient(props: ChatClientProps) {
 
   return (
     <div className=" flex h-[100vh] flex-col space-y-2 p-4">
-      <ChatMessages messages={messages} isLoading={isLoading} competition={competition} />
+      <ChatMessages messages={messages} isLoading={isLoading} competition={competition} initAIContent={initAIContent} />
       <ChatInput onSend={onSend} loading={isLoading} />
       {/* (
       <>
