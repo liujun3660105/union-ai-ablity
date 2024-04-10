@@ -7,7 +7,7 @@ import 'pdfjs-dist/web/pdf_viewer.css';
 
 pdf.GlobalWorkerOptions.workerSrc = PDFWorker;
 
-export default function usePdf(url: string, scale: number = 1.0) {
+export default function usePdf(url?: string, scale: number = 1.0) {
   const urlList = useRef<string[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -40,6 +40,7 @@ export default function usePdf(url: string, scale: number = 1.0) {
     setLoading(false);
   }
   useEffect(() => {
+    if (!url) return;
     initDocument(url);
   }, [url]);
 

@@ -242,5 +242,9 @@ export const addPrompt = (data: UpdatePromptParams) => {
 };
 
 export const bidingFileLoad = ({ data, onUploadProgress }: { data: FormData; onUploadProgress: (e: any) => void }) => {
-  return POST<FormData, ChatHistoryResponse>(`/api/v1/biding-agent/fileUpload`, data, { onUploadProgress });
+  return POST<FormData, ChatHistoryResponse>(`/api/v1/biding_agent/upload_file`, data, { onUploadProgress });
+};
+
+export const bidingQA = (data: { query: string; file_id: string }) => {
+  return POST<{ query: string; file_id: string }>('/api/v1/biding_agent/chat', data);
 };

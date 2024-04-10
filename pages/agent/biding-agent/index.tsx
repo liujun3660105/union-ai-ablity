@@ -1,60 +1,82 @@
-import React, { useEffect } from 'react';
-import SplitPane from 'react-split-pane';
-import UpLoadFile from '@/components/upload/UploadFile';
+'use client';
+import React, { useEffect, useState } from 'react';
+//@ts-ignore
+import SplitPane, { Pane } from 'react-split-pane-next';
+import UpLoadFile, { UploadFileProps } from '@/components/upload/UploadFile';
 import PDFViewer from '@/components/pdfViewer';
-import { wss } from '@/utils/ws';
+import { LayoutWrapper as Layout } from '@/components/layout/root-layout';
+import type { ReactElement } from 'react';
 import { Button } from 'antd';
+import { bidingQA } from '@/client/api';
 
-export type FileType = 'Tendering' | 'Biding';
+// export type FileType = 'tendering' | 'biding';
+export enum FileType {
+  TENDERING = 'tendering',
+  BIDING = 'biding',
+}
 
 export default function Index() {
-  function onReceiveMsg(res) {
-    console.log('test', res);
-  }
-
-  function onReceiveMsg1(res) {
-    console.log('test1', res);
-  }
-
+  const [bidingFileUrl, setBidingFileUrl] = useState<string>();
+  const [tenderingFileUrl, setTenderingFileUrl] = useState<string>();
   useEffect(() => {
     // wss.connect('ws://localhost:5002/ws');
     // wss.registerCallBack('test', onReceiveMsg);
     // wss.registerCallBack('test1', onReceiveMsg1);
   }, []);
 
-  function sendMsMessage() {
-    wss.send({ value: 'June', socketType: 'test' });
+  function onTenderingFileSelect(file: UploadFileProps) {
+    setTenderingFileUrl(file.fileUrl);
   }
-  function onTenderingFileSelect() {}
-  function onBidingFileSelect() {}
+  function onBidingFileSelect(file: UploadFileProps) {
+    setBidingFileUrl(file.fileUrl);
+  }
 
   return (
     <div className="h-[calc(100vh-6rem)]">
+      {/* <SplitPane split="vertical" minSize={50}>
+        <div />
+        <SplitPane split="horizontal">
+          <div />
+          <div />
+        </SplitPane>
+      </SplitPane> */}
       <SplitPane split="vertical">
-        <SplitPane minSize="10%" maxSize="500px" initialSize="20%">
+        <Pane minSize="10%" maxSize="500px" initialSize="20%" className="border-r-2">
           <div className="flex flex-col h-full overflow-y-auto">
             <div className="h-1/2 p-4">
-              <UpLoadFile fileType="Tendering" onSelect={onTenderingFileSelect} />
+              <UpLoadFile fileType={FileType.TENDERING} onSelect={onTenderingFileSelect} />
             </div>
             <div className="h-1/2 p-4 border-t-2">
-              <UpLoadFile fileType="Biding" onSelect={onBidingFileSelect} />
+              <UpLoadFile fileType={FileType.BIDING} onSelect={onBidingFileSelect} />
             </div>
           </div>
-        </SplitPane>
-        <SplitPane minSize="20%" initialSize="40%">
+        </Pane>
+        <Pane minSize="20%" initialSize="40%" className="border-r-2">
           <div className="flex flex-col h-full overflow-y-auto">
             <div className="h-1/2">
-              <PDFViewer fileType="Tendering" scale={1} url="https://arxiv.org/pdf/2210.03629.pdf" />
+              <PDFViewer fileType={FileType.BIDING} scale={1} url={tenderingFileUrl} />
             </div>
-            <div className="h-1/2 border-t-2">
-              <PDFViewer fileType="Biding" scale={1} url="https://arxiv.org/pdf/2210.03629.pdf" />
+            <div className="h-1/2 border-t-2 relative">
+              {/* "https://arxiv.org/pdf/2210.03629.pdf" */}
+              <PDFViewer fileType={FileType.TENDERING} scale={1} url={bidingFileUrl} />
             </div>
           </div>
-        </SplitPane>
-        <SplitPane minSize="20%" initialSize="40%">
-          <Button onClick={sendMsMessage}>发送请求</Button>
-        </SplitPane>
+        </Pane>
+        <Pane minSize="20%" initialSize="40%">
+          <div>
+            <Button
+              onClick={async () => {
+                await bidingQA({ query: '尿酸多高', file_id: '123' });
+              }}
+            >
+              问答测试
+            </Button>
+          </div>
+        </Pane>
       </SplitPane>
     </div>
   );
 }
+Index.getLayout = function getLayout(page: ReactElement) {
+  return <Layout>{page}</Layout>;
+};
