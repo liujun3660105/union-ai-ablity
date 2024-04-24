@@ -7,7 +7,7 @@ export { default } from 'next-auth/middleware';
 //   },
 // });
 // 除了login页面，其他页面都需要进行鉴权
-export const config = { matcher: ['/((?!login).*)'] };
+export const config = { matcher: ['/((?!login|register).*)'] };
 
 // export default withAuth({
 //     callbacks: {

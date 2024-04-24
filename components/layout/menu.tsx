@@ -37,6 +37,7 @@ export const getItems: (t: TFunction<'translation', undefined>) => MenuItem[] = 
       getItem(t('BidingAgent'), 'biding-agent', <MailOutlined />),
       getItem(t('TeacherAgent'), 'teacher-agent', <MailOutlined />),
     ]),
+    getItem(t('RAG'), 'rag', <MailOutlined />),
 
     getItem(t('Video_LLM'), 'video-llm', <SettingOutlined />, [getItem(t('Video_Generation'), 'vg')]),
   ];

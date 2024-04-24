@@ -11,7 +11,7 @@ const nextConfig = {
     API_BASE_URL: process.env.API_BASE_URL,
     WS_BASE_URL: process.env.WS_BASE_URL,
   },
-  trailingSlash: true,
+  // trailingSlash: true,
   images: { unoptimized: true },
 };
 

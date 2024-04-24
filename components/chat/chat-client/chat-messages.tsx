@@ -26,7 +26,7 @@ function ChatMessages(props: ChatMessagesProps) {
     scrollRef?.current?.scrollIntoView({ behavior: 'smooth' });
   }, [competition, messages]);
   return (
-    <div className="flex-1 overflow-y-auto pr-4">
+    <div className="flex-1 h-96 overflow-y-auto pr-4">
       <ChatMessage
         role="system"
         isLoading={fakeLoading}
