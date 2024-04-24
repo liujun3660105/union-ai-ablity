@@ -25,7 +25,7 @@ const App: React.FC = () => {
         // callbackUrl: `${window.location.origin}${callbackUrl}`,
       });
       console.log('user', user);
-      if (user) {
+      if (user && !user.error) {
         message.success('登录成功');
         router.push(Array.isArray(callbackUrl) ? callbackUrl[0] : callbackUrl);
         // router.refresh();
@@ -68,7 +68,7 @@ const App: React.FC = () => {
 
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
           <Button type="primary" htmlType="submit">
-            Submit
+            登录
           </Button>
         </Form.Item>
       </Form>

@@ -71,7 +71,7 @@ export default function ChatClient(props: ChatClientProps) {
   }, []);
 
   return (
-    <div className=" flex h-[100vh] flex-col space-y-2 p-4">
+    <div className=" flex flex-col space-y-2 p-4 h-full">
       <ChatMessages messages={messages} isLoading={isLoading} competition={competition} initAIContent={initAIContent} />
       <ChatInput onSend={onSend} loading={isLoading} />
       {/* (

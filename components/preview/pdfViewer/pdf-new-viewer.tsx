@@ -11,7 +11,6 @@ import 'pdfjs-dist/web/pdf_viewer.css';
 import Script from 'next/script';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = PDFWorker;
-const document = window.document;
 
 interface PDFViewerProps {
   scale?: number;

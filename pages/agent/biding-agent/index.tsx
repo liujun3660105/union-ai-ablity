@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 //@ts-ignore
 import SplitPane, { Pane } from 'react-split-pane-next';
 import UpLoadFile, { UploadFileProps } from '@/components/upload/UploadFile';
-import PDFViewer from '@/components/pdfViewer';
+import PDFViewer from '@/components/preview/pdfViewer';
 import { LayoutWrapper as Layout } from '@/components/layout/root-layout';
 import type { ReactElement } from 'react';
 import { Button } from 'antd';
@@ -18,11 +18,7 @@ export enum FileType {
 export default function Index() {
   const [bidingFileUrl, setBidingFileUrl] = useState<string>();
   const [tenderingFileUrl, setTenderingFileUrl] = useState<string>();
-  useEffect(() => {
-    // wss.connect('ws://localhost:5002/ws');
-    // wss.registerCallBack('test', onReceiveMsg);
-    // wss.registerCallBack('test1', onReceiveMsg1);
-  }, []);
+  useEffect(() => {}, []);
 
   function onTenderingFileSelect(file: UploadFileProps) {
     setTenderingFileUrl(file.fileUrl);
@@ -54,11 +50,11 @@ export default function Index() {
         <Pane minSize="20%" initialSize="40%" className="border-r-2">
           <div className="flex flex-col h-full overflow-y-auto">
             <div className="h-1/2">
-              <PDFViewer fileType={FileType.BIDING} scale={1} url={tenderingFileUrl} />
+              <PDFViewer scale={1} url={tenderingFileUrl} />
             </div>
             <div className="h-1/2 border-t-2 relative">
               {/* "https://arxiv.org/pdf/2210.03629.pdf" */}
-              <PDFViewer fileType={FileType.TENDERING} scale={1} url={bidingFileUrl} />
+              <PDFViewer scale={1} url={bidingFileUrl} />
             </div>
           </div>
         </Pane>

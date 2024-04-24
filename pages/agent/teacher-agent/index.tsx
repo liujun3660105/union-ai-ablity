@@ -7,7 +7,7 @@ export default function Index() {
   function handleRecieveMessage() {}
 
   return (
-    <div className="bg-base-300">
+    <div className="bg-base-300 h-full">
       <ChatClient
         callback={handleRecieveMessage}
         clientId="12345"

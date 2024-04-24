@@ -61,7 +61,7 @@ export default function UploadFile(props: IUploadFileProps) {
     beforeUpload(file: RcFile) {
       const isPDF = file.type === 'application/pdf';
       if (!isPDF) {
-        void message.error('You can only upload JPG/PNG file!');
+        void message.error('You can only upload PDF file!');
       }
       const isLt2M = file.size / 1024 / 1024 < 200;
       if (!isLt2M) {

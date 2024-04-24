@@ -1,4 +1,4 @@
-import { AxiosRequestConfig } from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 import { GET, POST } from '.';
 import { DbListResponse, DbSupportTypeResponse, PostDbParams, ChatFeedBackSchema } from '@/types/db';
 import { DialogueListResponse, IChatDialogueSchema, NewDialogueParam, SceneResponse, ChatHistoryResponse, FeedBack, IDB } from '@/types/chat';
@@ -26,6 +26,7 @@ import {
   ISyncBatchResponse,
 } from '@/types/knowledge';
 import { UpdatePromptParams, IPrompt, PromptParams } from '@/types/prompt';
+import { FileFormat } from '@/pages/rag/config';
 
 /** App */
 export const postScenes = () => {
@@ -247,4 +248,39 @@ export const bidingFileLoad = ({ data, onUploadProgress }: { data: FormData; onU
 
 export const bidingQA = (data: { query: string; file_id: string }) => {
   return POST<{ query: string; file_id: string }>('/api/v1/biding_agent/chat', data);
+};
+
+export const ragFileUpload = ({ data, onUploadProgress }: { data: FormData; onUploadProgress: (e: any) => void }) => {
+  return axios.post(`/api/rag/upload`, data, {
+    onUploadProgress,
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+};
+
+interface RagFileParserProps {
+  file_id: string;
+  file_name: string;
+  file_format: FileFormat;
+  file_path: string;
+}
+export const ragFileParser = (data: RagFileParserProps) => {
+  return POST<RagFileParserProps>(`/api/v1/rag/file_parser`, data);
+};
+
+export const updateFileParserStatus = (data: { fileId: string; status: boolean }) => {
+  return axios.post(`/api/rag/update-parser-status`, data);
+};
+
+export interface RegisterPayloadProps {
+  username: string;
+  password: string;
+}
+
+// export const register = (data: RegisterPayloadProps) => {
+//   return POST<RegisterPayloadProps>(`/api/auth/register`, data);
+// };
+export const register = (data: RegisterPayloadProps) => {
+  return axios.post('/api/auth/register', data);
 };

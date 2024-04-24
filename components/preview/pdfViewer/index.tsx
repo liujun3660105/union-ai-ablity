@@ -7,11 +7,10 @@ import { FileType } from '@/pages/agent/biding-agent';
 interface PDFViewerProps {
   scale?: number;
   url?: string;
-  fileType: FileType;
 }
 
 export default function Index(props: PDFViewerProps) {
-  const { url, scale = 1.0, fileType } = props;
+  const { url, scale = 1.0 } = props;
   const { loading, urlList } = usePdf(url, scale);
   const goPage = (page: number) => {
     document.querySelector(`pdf-viewer-img-${page}`)?.scrollIntoView({ behavior: 'smooth' });
@@ -22,17 +21,7 @@ export default function Index(props: PDFViewerProps) {
       {loading ? (
         <>loading...</>
       ) : (
-        urlList.map((url, i) => (
-          <img
-            id={`${fileType}-pdf-viewer-img-${i + 1}`}
-            className={psfViewerClass.unselectable}
-            draggable="false"
-            key={i}
-            src={url}
-            alt=""
-            width="100%"
-          />
-        ))
+        urlList.map((url, i) => <img className={psfViewerClass.unselectable} draggable="false" key={i} src={url} alt="" width="100%" />)
       )}
     </div>
   );

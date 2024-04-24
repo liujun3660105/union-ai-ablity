@@ -112,36 +112,38 @@ enum Role {
   user
 }
 
-model Message {
-  id       String   @id @default(cuid())
-  role     Role
-  content  String
-  createAt DateTime @default(now())
-  updateAt DateTime @updatedAt
-  fileId   String
-  userId   String
-  file     File     @relation(fields: [fileId], references: [id], onDelete: Cascade)
+// model Message {
+//   id       String   @id @default(cuid())
+//   role     Role
+//   content  String
+//   createAt DateTime @default(now())
+//   updateAt DateTime @updatedAt
+//   fileId   String
+//   userId   String
+//   file     File     @relation(fields: [fileId], references: [id], onDelete: Cascade)
 
-  @@index([id])
-}
+//   @@index([id])
+// }
 
-enum FileType {
+enum FileFormat {
   pdf
   image
   txt
-  doc
+  docx
   xlsx
   csv
+  pptx
+  md
 }
 
 model File {
-  id                    String    @id @default(cuid())
-  fileType              FileType
-  fileUrl               String
-  fileName              String
-  vectorStoreCollection String
-  createAt              DateTime  @default(now())
-  userId                String
-  messages              Message[]
-  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                String     @id @default(cuid())
+  fileId            String     @unique
+  fileFormat        FileFormat
+  fileUrl           String
+  fileName          String
+  fileParsingStatus Boolean
+  createAt          DateTime   @default(now())
+  userId            String
+  user              User       @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
