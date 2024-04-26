@@ -39,7 +39,7 @@ declare module 'next-auth' {
 export const authOptions: NextAuthOptions = {
   session: {
     strategy: 'jwt',
-    maxAge: 3000,
+    maxAge: 2592000,
   },
   callbacks: {
     jwt({ token, user }) {
@@ -79,16 +79,16 @@ export const authOptions: NextAuthOptions = {
     CredentialProvider({
       name: 'Credentials',
       credentials: {
-        // username: {
-        //   label: 'username',
-        //   type: 'text',
-        //   placeholder: 'input your username',
-        // },
-        // password: {
-        //   label: 'password',
-        //   type: 'text',
-        //   placeholder: 'input your password',
-        // },
+        username: {
+          label: 'username',
+          type: 'text',
+          placeholder: 'input your username',
+        },
+        password: {
+          label: 'password',
+          type: 'text',
+          placeholder: 'input your password',
+        },
       },
       async authorize(credentials, req) {
         if (!credentials) return null;

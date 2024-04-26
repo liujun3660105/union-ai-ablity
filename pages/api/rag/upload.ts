@@ -20,32 +20,33 @@ export const config = getConfig();
 
 async function handler(req: FormNextApiRequest, res: NextApiResponse) {
   const session = await getServerAuthSession(req, res);
+  console.log('🚀 ~ handler ~ session:', session);
   if (!session?.user.id) {
-    return new Response('UNAUTHORIZED', {
-      status: 404,
-    });
+    res.status(404).json({ message: 'You must be logged in.' });
+    return;
   }
+  try {
+    const { file, fields } = req;
+    const { fileId, fileFormat } = fields;
 
-  console.log('req.body', req.file, req.fields);
-  const { file, fields } = req;
-  const { fileId, fileFormat } = fields;
-
-  const fileStream = fs.createReadStream(file.filepath);
-  const fileName = file.originalFilename as string;
-  const fileUrl = await saveFileToMinIO(fileStream, fileName);
-  const shortFileUrl = fileUrl.split('?')[0];
-  await db.file.create({
-    data: {
-      userId: session.user.id,
-      fileId,
-      fileFormat,
-      fileName,
-      fileUrl: shortFileUrl,
-      fileParsingStatus: false,
-    },
-  });
-
-  res.status(200).json({ url: shortFileUrl });
+    const fileStream = fs.createReadStream(file.filepath);
+    const fileName = file.originalFilename as string;
+    const fileUrl = await saveFileToMinIO(fileStream, fileName);
+    const shortFileUrl = fileUrl.split('?')[0];
+    await db.file.create({
+      data: {
+        userId: session.user.id,
+        fileId,
+        fileFormat,
+        fileName,
+        fileUrl: shortFileUrl,
+        fileParsingStatus: false,
+      },
+    });
+    res.status(200).json({ url: shortFileUrl });
+  } catch (error) {
+    res.status(200).json({ message: error });
+  }
 }
 
 // async function saveFileToMinIO(file: File, fileName: string) {
