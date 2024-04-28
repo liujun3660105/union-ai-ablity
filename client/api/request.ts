@@ -259,6 +259,10 @@ export const ragFileUpload = ({ data, onUploadProgress }: { data: FormData; onUp
   });
 };
 
+export const getFileList = () => {
+  return axios.get('/api/rag/get-file-list');
+};
+
 interface RagFileParserProps {
   file_id: string;
   file_name: string;

@@ -38,6 +38,7 @@ export function LayoutWrapper({ children }: { children: React.ReactNode }) {
           // colorBgContainer: ThemeColor[mode || 'light']['base-300'],
           colorBgBase: ThemeColor[mode]['base-300'],
           colorText: ThemeColor[mode]['base-content'],
+
           // colorInfoText: ThemeColor[mode || 'light']['base-content'],
           // colorPrimaryTextActive: ThemeColor[mode || 'light']['base-content'],
           // colorInfoTextActive: ThemeColor[mode || 'light']['base-content'],
@@ -72,6 +73,11 @@ export function LayoutWrapper({ children }: { children: React.ReactNode }) {
           Button: {
             // colorPrimary: ThemeColor[mode]['base-content'],
             colorText: ThemeColor[mode]['base-content'],
+            algorithm: true,
+          },
+          Tabs: {
+            itemSelectedColor: ThemeColor[mode]['base-content'],
+            itemHoverColor: ThemeColor[mode]['base-content'],
             algorithm: true,
           },
         },

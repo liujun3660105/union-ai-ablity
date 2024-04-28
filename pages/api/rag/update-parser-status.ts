@@ -11,9 +11,11 @@ interface ReqProps {
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getServerAuthSession(req, res);
   if (!session?.user.id) {
-    return new Response('UNAUTHORIZED', {
-      status: 404,
-    });
+    // return new Response('UNAUTHORIZED', {
+    //   status: 404,
+    // });
+    res.status(404).json({ message: 'You must be logged in.' });
+    return;
   }
 
   console.log('req.body', req.body);
