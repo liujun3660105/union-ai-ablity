@@ -1,9 +1,9 @@
 'use client';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { InboxOutlined } from '@ant-design/icons';
 import { message, Upload } from 'antd';
 import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface';
-import { ragFileUpload, ragFileParser, updateFileParserStatus } from '@/client/api';
+import { ragFileUpload, ragFileParser, updateFileParserStatus, getFileList } from '@/client/api';
 import { FileFormat, fileFormatList } from '../config';
 import FileItem from './custom-file-item';
 import update from 'immutability-helper';
@@ -53,6 +53,25 @@ export default function UploadFile(props: IUploadFileProps) {
   function handleDeleteFile(f: UploadFileProps) {
     console.log('delete', f);
   }
+  useEffect(() => {
+    fetchFileList();
+  }, []);
+  async function fetchFileList() {
+    const fileList = await getFileList();
+    console.log('🚀 ~ fetchFileList ~ fileList:', fileList);
+    const originFileList = fileList.data.data;
+    const processFileList = originFileList.map((f: any) => {
+      return {
+        uid: f.fileId,
+        name: f.fileName,
+        url: f.fileUrl,
+        fileParsing: f.fileParsingStatus,
+        percent: 100,
+        status: 'done',
+      };
+    });
+    setFileList(processFileList.reverse());
+  }
 
   return (
     <div>
@@ -60,9 +79,11 @@ export default function UploadFile(props: IUploadFileProps) {
         {...fileProps}
         fileList={fileList}
         onChange={(e) => {
+          console.log('e.fileList', e.fileList);
           const newFileList: UploadFileProps[] = [...e.fileList].map((f) => ({ ...f, fileParsing: false }));
-          fileListRef.current = newFileList;
-          setFileList(newFileList);
+          const diffFileList = newFileList.filter((f) => !fileListRef.current.find((ff) => ff.uid === f.uid)).reverse();
+          fileListRef.current = [...diffFileList, ...fileListRef.current];
+          setFileList(fileListRef.current);
         }}
         customRequest={(options) => {
           const file = options.file as RcFile;
@@ -83,18 +104,18 @@ export default function UploadFile(props: IUploadFileProps) {
               const percent = Number((e.progress * 100).toFixed(2));
               const newFileList = update(fileListRef.current, {
                 [fileItemIndex]: {
-                  $merge: { percent: Number((e.progress * 100).toFixed(2)), status: percent == 100 ? 'done' : 'uploading' },
+                  $merge: { percent: Number((e.progress * 100).toFixed(2)), status: 'uploading' },
                 },
               });
-              setFileList(newFileList);
               fileListRef.current = newFileList;
+              setFileList(newFileList);
             },
           })
             .then(async (res) => {
               const fileUrl = res.data.url as string;
               const newFileList = update(fileListRef.current, {
                 [fileItemIndex]: {
-                  $merge: { url: fileUrl },
+                  $merge: { url: fileUrl, status: 'done' },
                 },
               });
               setFileList(newFileList);

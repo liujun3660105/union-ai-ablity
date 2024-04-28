@@ -39,7 +39,7 @@ const LONG_TIME_API: string[] = [
 ins.interceptors.request.use((request) => {
   const isLongTimeApi = LONG_TIME_API.some((item) => request.url && request.url.indexOf(item) >= 0);
   if (!request.timeout) {
-    request.timeout = isLongTimeApi ? 60000 : 10000;
+    request.timeout = isLongTimeApi ? 100000 : 80000;
   }
   return request;
 });
