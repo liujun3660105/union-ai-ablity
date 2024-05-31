@@ -30,7 +30,10 @@ export default function Index() {
         <Pane minSize="10%" maxSize="500px" initialSize="20%" className="border-r-2">
           <div className="flex flex-col h-full overflow-y-auto">
             <div className="p-4">
-              <UpLoadFile fileformat={[FileFormat.PDF, FileFormat.DOC]} onSelect={onFileSelect} />
+              <UpLoadFile
+                fileformat={[FileFormat.PDF, FileFormat.DOC, FileFormat.EXCEL, FileFormat.PPT, FileFormat.TXT, FileFormat.MARKDOWN]}
+                onSelect={onFileSelect}
+              />
             </div>
           </div>
         </Pane>

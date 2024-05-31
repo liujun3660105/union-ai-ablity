@@ -17,6 +17,7 @@ type ChatParams = {
 };
 
 const useChat = ({ queryAgentURL = '/api/v1/chat/completions' }: Props) => {
+  console.log('🚀 ~ useChat ~ queryAgentURL111:', queryAgentURL);
   // const ctrl = useMemo(() => new AbortController(), []);
   const ctrolRef = useRef(new AbortController());
   const chat = useCallback(
