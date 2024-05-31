@@ -10,29 +10,6 @@ import update from 'immutability-helper';
 
 const { Dragger } = Upload;
 
-const fileProps: UploadProps = {
-  name: 'file',
-  multiple: true,
-  accept: fileFormatList.map((item) => item.label).join(','),
-  // fileList: fileList,
-  // action: 'http://localhost:3000/api/rag/upload',
-
-  onDrop(e) {
-    console.log('Dropped files', e.dataTransfer.files);
-  },
-  beforeUpload(file: RcFile) {
-    const isFileFormatValidate = fileFormatList.map((item) => item.type).includes(file.type);
-    if (!isFileFormatValidate) {
-      message.error(`The file ${file.name} you upload is not valid, only pdf、doc、ppt、excel、img、txt、markdown are supported`);
-    }
-    const isLt2M = file.size / 1024 / 1024 < 200;
-    if (!isLt2M) {
-      message.error(`The file ${file.name} must smaller than 2MB!`);
-    }
-    return isFileFormatValidate && isLt2M;
-  },
-  showUploadList: false,
-};
 export interface UploadFileProps extends UploadFile {
   fileParsing: Boolean;
 }
@@ -42,7 +19,33 @@ interface IUploadFileProps {
 }
 
 export default function UploadFile(props: IUploadFileProps) {
-  const { onSelect } = props;
+  const { onSelect, fileformat } = props;
+  const fileProps: UploadProps = {
+    name: 'file',
+    multiple: true,
+    accept: fileFormatList
+      .filter((f) => fileformat.includes(f.value))
+      .map((item) => item.label)
+      .join(','),
+    // fileList: fileList,
+    // action: 'http://localhost:3000/api/rag/upload',
+
+    onDrop(e) {
+      console.log('Dropped files', e.dataTransfer.files);
+    },
+    beforeUpload(file: RcFile) {
+      const isFileFormatValidate = fileFormatList.map((item) => item.type).includes(file.type);
+      if (!isFileFormatValidate) {
+        message.error(`The file ${file.name} you upload is not valid, only pdf、doc、ppt、excel、img、txt、markdown are supported`);
+      }
+      const isLt2M = file.size / 1024 / 1024 < 200;
+      if (!isLt2M) {
+        message.error(`The file ${file.name} must smaller than 2MB!`);
+      }
+      return isFileFormatValidate && isLt2M;
+    },
+    showUploadList: false,
+  };
   const [fileList, setFileList] = useState<UploadFileProps[]>([]);
   const fileListRef = useRef<UploadFileProps[]>([]);
 

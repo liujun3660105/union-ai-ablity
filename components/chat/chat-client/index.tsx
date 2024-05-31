@@ -18,10 +18,11 @@ interface ChatClientProps {
   callback?: (v: string) => void;
   queryAgentURL?: string;
   initAIContent?: string;
+  image?: string;
 }
 
 export default function ChatClient(props: ChatClientProps) {
-  const { callback, clientId, queryAgentURL, initAIContent } = props;
+  const { callback, clientId, queryAgentURL, initAIContent, image } = props;
   const { chat, stopSSE } = useChat({ queryAgentURL: queryAgentURL || '/api/v1/chat/map-interact' });
   const [competition, setCompetition] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -39,7 +40,7 @@ export default function ChatClient(props: ChatClientProps) {
 
     console.log('val', val);
     chat({
-      data: { query: val, client_id: clientId },
+      data: { query: val, client_id: clientId, image },
 
       onMessage: (message) => {
         systemResponseMessage = message;
