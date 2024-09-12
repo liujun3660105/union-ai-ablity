@@ -69,7 +69,6 @@ export default function Index() {
   }
 
   function addLayer(geojson: GeoJSON.Feature | GeoJSON.FeatureCollection) {
-    debugger;
     let geometryType = '';
     let mapboxGeomType = '';
     if (geojson.type === 'Feature') {
@@ -120,7 +119,7 @@ export default function Index() {
   }
 
   function displayFeature(geojson: GeoJSON.FeatureCollection) {
-    debugger;
+    r;
     mapRef.current?.getLayer('point-feature') && mapRef.current?.removeLayer('point-feature');
     mapRef.current?.getLayer('line-feature') && mapRef.current?.removeLayer('line-feature');
     mapRef.current?.getLayer('polygon-feature') && mapRef.current?.removeLayer('polygon-feature');
