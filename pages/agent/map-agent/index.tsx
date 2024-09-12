@@ -4,6 +4,7 @@ import mapboxgl from 'mapbox-gl';
 import ChatClient from '@/components/chat/chat-client';
 import { wss } from '@/utils/ws';
 import { LayoutWrapper as Layout } from '@/components/layout/root-layout';
+import * as turf from '@turf/turf';
 import type { ReactElement } from 'react';
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || '';
@@ -39,7 +40,23 @@ export default function Index() {
   function initMap() {
     mapRef.current = new mapboxgl.Map({
       container: 'map_container', // container ID
-      style: 'mapbox://styles/mapbox/streets-v12', // style URL
+      // style: 'mapbox://styles/mapbox/streets-v12', // style URL
+      style: {
+        version: 8,
+        sources: {
+          'raster-tile': {
+            type: 'raster',
+            tiles: ['http://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}'],
+          },
+        },
+        layers: [
+          {
+            id: 'raster-tile',
+            type: 'raster',
+            source: 'raster-tile',
+          },
+        ],
+      },
       center: [117.66743, 39.04844], // starting position [lng, lat]
       zoom: 12, // starting zoom
     });
@@ -52,7 +69,6 @@ export default function Index() {
   }
 
   function addLayer(geojson: GeoJSON.Feature | GeoJSON.FeatureCollection) {
-    debugger;
     let geometryType = '';
     let mapboxGeomType = '';
     if (geojson.type === 'Feature') {
@@ -103,6 +119,7 @@ export default function Index() {
   }
 
   function displayFeature(geojson: GeoJSON.FeatureCollection) {
+    r;
     mapRef.current?.getLayer('point-feature') && mapRef.current?.removeLayer('point-feature');
     mapRef.current?.getLayer('line-feature') && mapRef.current?.removeLayer('line-feature');
     mapRef.current?.getLayer('polygon-feature') && mapRef.current?.removeLayer('polygon-feature');
